@@ -1,0 +1,116 @@
+version: "2"
+
+services:
+
+  # nginx:
+  #   build: ./nginx
+  #   image: api_master/nginx
+  #   env_file:
+  #     - ./config.env
+  #   volumes:
+  #     - nginx_conf:/etc/nginx/sites
+  #     - letsencrypt_certs:/etc/letsencrypt
+  #     - certbot_acme_challenge:/var/www/certbot
+  #     - ./vhosts:/etc/nginx/vhosts
+  #     - ./html:/var/www/html
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   restart: unless-stopped
+
+  # certbot:
+  #   build: ./certbot
+  #   image: api_master/certbot
+  #   env_file:
+  #     - ./config.env
+  #   volumes:
+  #     - letsencrypt_certs:/etc/letsencrypt
+  #     - certbot_acme_challenge:/var/www/certbot
+  #   restart: unless-stopped
+
+  # cron:
+  #   build: ./cron
+  #   image: api_master/cron
+  #   environment:
+  #     COMPOSE_PROJECT_NAME: "${COMPOSE_PROJECT_NAME}"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - ./:/workdir:ro
+  #   restart: unless-stopped
+
+  cron_de_local_tunnel:
+    image: ngrok/ngrok
+    command: http --domain=mutually-advanced-pegasus.ngrok-free.app bstamps_shell-bstamps-1:5009
+    environment:
+      - NGROK_AUTHTOKEN=7j7CorozNQVA2P8Xprrnt_6DyZkZ3woKPQLYQrpsi7e
+    restart: unless-stopped
+
+
+  bstamps:
+    build: ./api_master_v1
+    image: api_master/bstamps 
+    ports:
+      - "5009:5009"
+    volumes:
+      - ./api_master_v1:/usr/src/app
+    restart: unless-stopped
+  
+  # nlu:
+  #   build: ./rasa_nlu_puter
+  #   image: api_master/nlu_puter 
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./api_master_v1/api_puter:/app
+  #   restart: unless-stopped
+    
+  bredis:
+    image: redis/redis-stack:6.2.6-v2
+    environment:
+      - REDIS_ARGS= --appendonly yes
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+  
+  
+  cron_redis_loader:
+    build: ./cron_redis_loader
+    image: api_master/cron_redis_loader
+    environment:
+      COMPOSE_PROJECT_NAME: "bstamps_shell"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/workdir:ro
+    restart: unless-stopped
+  
+  cron_indexing_scheduler:
+    build: ./cron_indexing_scheduler
+    image: local_station/cron_indexing_scheduler
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/workdir:ro
+      - ./local_media_production:/cron_indexing_scheduler/local_media_production
+    
+    restart: unless-stopped
+  
+  s3proxy:
+    build: ./local_s3  # Adjust the build context as needed
+    image: local_station/s3proxy
+    ports:
+      - "8020:8020"  # Adjust the port if needed
+    volumes:
+      - ./local_s3:/data  # Mount the local_s3 directory to /data in the container
+    restart: unless-stopped
+
+volumes:
+  nginx_conf:
+    external: true
+  letsencrypt_certs:
+    external: true
+  certbot_acme_challenge:
+    external: true
+  redis_data:
+    external: true

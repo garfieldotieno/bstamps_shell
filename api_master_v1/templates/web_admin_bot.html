@@ -1,0 +1,1315 @@
+{% extends 'side_nav_base.html' %}
+
+{% block content %}
+   
+
+    <div class="parent_display_container">
+    <div class="large_display_section">
+        {% if (session_data.activity_json.current_intent == 'Landing_page') or (session_data.activity_json.current_intent == None ) %}
+        
+        <div class="item_card_container">
+            <div class="bot_button_layer top_back_btn_hidden">
+                <button class="bot_button" id="home_btn" onclick="show_small_bot_home()">
+                    Home
+                </button>
+            </div>
+            <br>
+            
+            <br>
+            <div class="session_data_holder">
+                <div class="session_surface">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div>
+                                <strong>User ID:</strong> {{session_data.id}}
+                            </div>
+                            <div>
+                                <strong>User Type:</strong> {{session_data.session_type}}
+                            </div>
+                            <div>
+                                <strong>Session ID:</strong> {{session_data.uid}}
+                            </div>
+                            <!-- Add other session details here -->
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                <strong>Contact:</strong> {{session_data.activity_json['contact']}}
+                            </div>
+                            <div>
+                                <strong>Start Time:</strong> 2023-10-26 14:30:00
+                            </div>
+                            <div>
+                                <strong>End Time:</strong> 2023-10-26 15:30:00
+                            </div>
+                            <!-- Add other session details here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4>Auth cards</h4>
+            <br>
+            <div class="card_data_holder">
+                <div class="card_surface">
+                    <table id="auth_table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Time</th>
+                                <th>Card</th>
+                                <th>Session</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for card in cards %}
+                            
+                            <!-- admin maneno -->
+                            {% if card.payload['session_data']['session_type'] == "Admin" %}
+                                    
+                                    {% if card.payload['session_data']['card_type'] == "Auth_Reset_Card" %}
+                                        <tr>
+                                            <td>
+                                                {{ card.id }}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.timestamp }}                                                
+                                            </td>
+                                            <td>
+                                                {{card.payload['session_data']['card_type']}}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.payload['session_data']['session_type'] }}                                                
+                                            </td>
+                                            <td class="action_zone_cell">
+                                                <script>
+                                                    function process_download_card(){
+                                                        event.preventDefault()
+                                                        download_url = event.target
+                                                        const link = document.createElement('a');
+                                                        link.href = download_url;
+                                                        link.download = "file_name";
+                                                        link.click();
+                                                        link.remove();
+
+                                                    }
+            
+                                                    </script>
+                                                    
+                                                    
+                                                    <div class="item_get_button_layer">
+                                                        <a href="/{{card.url.split('/')[-3]}}/{{card.url.split('/')[-2]}}/{{card.url.split('/')[-1]}}" class="item_get_button btn" onclick="process_download_card()">Download</a>
+                                                    </div>
+                                        
+                                                                      
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+
+                                    {% if card.payload['session_data']['card_type'] == "Auth_Card" %}
+                                        <tr>
+                                            <td>
+                                                {{ card.id }}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.timestamp }}                                                
+                                            </td>
+                                            <td>
+                                                {{card.payload['session_data']['card_type']}}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.payload['session_data']['session_type'] }}                                                
+                                            </td>
+                                            <td class="action_zone_cell">
+                                                <script>
+                                                    function process_download_card(){
+                                                        event.preventDefault()
+                                                        download_url = event.target
+                                                        const link = document.createElement('a');
+                                                        link.href = download_url;
+                                                        link.download = "file_name";
+                                                        link.click();
+                                                        link.remove();
+               
+                                                    }
+            
+                                                    </script>
+                                                    
+                                                    
+                                                    <div class="item_get_button_layer">
+                                                        <a href="/{{card.url.split('/')[-3]}}/{{card.url.split('/')[-2]}}/{{card.url.split('/')[-1]}}" class="item_get_button btn" onclick="process_download_card()">Download</a>
+                                                    </div>                      
+                                            </td>
+                                        </tr>
+                                    {% endif %} 
+                                       
+                            {% endif %}
+                            
+                            
+
+                            {% endfor %}
+                        </tbody>
+                   </table>
+                </div>
+            </div>
+            <br>
+            <h4>Instaticket cards</h4>
+            <br>
+            <div class="card_data_holder">
+                <div class="card_surface">
+                    <table id="instaticket_table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Time</th>
+                                <th>Card</th>
+                                <th>Session</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for card in cards %}
+                                {% if card.payload['session_data']['card_type'] == "Insta_Pu_Card" %}
+                                    <tr>
+                                        <td>
+                                            {{ card.id }}                                                
+                                        </td>
+                                        <td>
+                                            {{ card.timestamp }}                                                
+                                        </td>
+                                        <td>
+                                            {{card.payload['session_data']['card_type']}}                                                
+                                        </td>
+                                        <td>
+                                            {{ card.payload['session_data']['session_type'] }}                                                
+                                        </td>
+                                        <td class="action_zone_cell">
+                                            <form class="item_get_button_layer" >
+                                                <input type="hidden" name="delete_card_uid" value="{{ card.uid }}">
+                                                <button class="item_get_button">Delete</button>
+                                            </form>
+                                            <script>
+                                                function process_download_card(){
+                                                    event.preventDefault()
+                                                    download_url = event.target
+                                                    const link = document.createElement('a');
+                                                    link.href = download_url;
+                                                    link.download = "file_name";
+                                                    link.click();
+                                                    link.remove();        
+                                                }
+        
+                                            </script>
+                                                
+                                                
+                                                <div class="item_get_button_layer">
+                                                    <a href="/{{card.url.split('/')[-3]}}/{{card.url.split('/')[-2]}}/{{card.url.split('/')[-1]}}" class="item_get_button btn" onclick="process_download_card()">Download</a>
+                                                </div>
+
+                                            
+                                                {% if new_list and new_list != [] %}
+                                                    {% if new_list[0][card.uid] %}
+                                                        <form class="item_get_button_layer itemForm" >
+                                                            <input type="hidden" name="delete_card_uid" value="{{ card.uid }}">
+                                                            <button class="item_get_button" onclick="copyToClipboard('{{ new_list[0][card.uid] }}')">{{ new_list[0][card.uid] }}</button>
+                                                        </form>
+                                                        <script>
+                                                            function copyToClipboard(text) {
+                                                                const el = document.createElement('textarea');
+                                                                el.value = text;
+                                                                el.setAttribute('readonly', '');
+                                                                el.style.position = 'absolute';
+                                                                el.style.left = '-9999px';
+                                                                document.body.appendChild(el);
+                                                                el.select();
+                                                                document.execCommand('copy');
+                                                                document.body.removeChild(el);
+                                                                // Optional alert to indicate the text has been copied.
+                                                                alert("Copied to clipboard: " + text);
+                                                            }
+                                                        </script>
+                                                    {% endif %}
+                                                {% endif %}
+
+                                        </td>
+                                    </tr>
+                                {% endif %}
+
+                                {% if card.payload['session_data']['card_type'] == "Insta_Pr_Card" %}
+                                    <tr>
+                                        <td>
+                                            {{ card.id }}                                                
+                                        </td>
+                                        <td>
+                                            {{ card.timestamp }}                                                
+                                        </td>
+                                        <td>
+                                            {{card.payload['session_data']['card_type']}}                                                
+                                        </td>
+                                        <td>
+                                            {{ card.payload['session_data']['session_type'] }}                                                
+                                        </td>
+                                        <td class="action_zone_cell">
+                                            <form class="item_get_button_layer" >
+                                                <input type="hidden" name="delete_card_uid" value="{{ card.uid }}">
+                                                <button class="item_get_button">Delete</button>
+                                            </form>
+                                            <script>
+                                                function process_download_card(){
+                                                    event.preventDefault()
+                                                    download_url = event.target
+                                                    const link = document.createElement('a');
+                                                    link.href = download_url;
+                                                    link.download = "file_name";
+                                                    link.click();
+                                                    link.remove();
+
+                                                            
+                                                }
+        
+                                            </script>
+                                                
+                                                
+                                                <div class="item_get_button_layer">
+                                                    <a href="/{{card.url.split('/')[-3]}}/{{card.url.split('/')[-2]}}/{{card.url.split('/')[-1]}}" class="item_get_button btn" onclick="process_download_card()">Download</a>
+                                                </div>
+
+                                            
+                                                {% if new_list and new_list != [] %}
+                                                    {% if new_list[0][card.uid] %}
+                                                        <form class="item_get_button_layer itemForm" >
+                                                            <input type="hidden" name="delete_card_uid" value="{{ card.uid }}">
+                                                            <button class="item_get_button" onclick="copyToClipboard('{{ new_list[0][card.uid] }}')">{{ new_list[0][card.uid] }}</button>
+                                                        </form>
+                                                        <script>
+                                                            function copyToClipboard(text) {
+                                                                const el = document.createElement('textarea');
+                                                                el.value = text;
+                                                                el.setAttribute('readonly', '');
+                                                                el.style.position = 'absolute';
+                                                                el.style.left = '-9999px';
+                                                                document.body.appendChild(el);
+                                                                el.select();
+                                                                document.execCommand('copy');
+                                                                document.body.removeChild(el);
+                                                                // Optional alert to indicate the text has been copied.
+                                                                alert("Copied to clipboard: " + text);
+                                                            }
+                                                        </script>
+                                                    {% endif %}
+                                                {% endif %}
+
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <h4>Order cards</h4>
+            <br>
+            <div class="card_data_holder">
+                <div class="card_surface">
+                    <table id="order_table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Time</th>
+                                <th>Card</th>
+                                <th>Session</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <h4>Receipt cards</h4>
+            <br>
+            <div class="card_data_holder">
+                <div class="card_surface">
+                    <table id="receipt_table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Time</th>
+                                <th>Card</th>
+                                <th>Session</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        {% endif %}
+
+        {% if (session_data.activity_json.current_intent == 'Items_page') %}
+        <div class="item_card_container">
+            <div class="bot_button_layer top_back_btn_hidden">
+                <button class="bot_button" id="home_btn" onclick="show_small_bot_home()">
+                    Home
+                </button>
+            </div>
+            <br>
+            <br>
+            <div class="bot_button_layer">
+                <button class="bot_button" id="home_btn" onclick="show_create_item_component()">
+                    Add
+                </button>
+            </div>
+            <br>
+            {% for item in resource_data %}
+            <!-- Item Card for a Single Item -->
+            <div class="item_card">
+                <img class="item_card_image" src="/static/media_store/{{item.item_media_url }}">
+                <div class="item_info">
+                    <div class="item_info_title">
+                        <h3 class="item_title">{{ item.title }}</h3>
+                        <p class="item_price">Ksh {{ item.price }}</p>
+                    </div>
+                    <p class="item_name">{{ item.name }}</p>
+                    <p class="item_description">{{ item.description }}</p>
+                </div>
+                
+
+                {% if item.public == True %}
+                <form class="item_get_button_layer " id="itemForm">
+                    <input type="hidden" name="make_insta_pu_item_id" value="{{ item.id }}">
+                    <button class="item_get_button">Insta Pu</button>
+                </form>
+                <form class="item_get_button_layer " id="itemForm">
+                    <input type="hidden" name="make_private_item_id" value="{{ item.id }}">
+                    <button class="item_get_button">Make Private</button>
+                </form>
+                {% endif %}
+
+                {% if item.public == False %}
+                <form class="item_get_button_layer " id="itemForm">
+                    <input type="hidden" name="make_insta_pr_item_id" value="{{ item.id }}">
+                    <button class="item_get_button">Insta Pr</button>
+                </form>
+                <form class="item_get_button_layer " id="itemForm">
+                    <input type="hidden" name="make_public_item_id" value="{{ item.id }}">
+                    <button class="item_get_button">Make Public</button>
+                </form>
+                {% endif %}
+
+                <form class="item_get_button_layer " id="itemForm">
+                    <input type="hidden" name="delete_item_id" value="{{ item.id }}">
+                    <button class="item_get_button">Delete</button>
+                </form>
+                
+            </div>
+            <!-- End of Item Card for a Single Item -->
+            {% endfor %}
+            <script>
+                function show_create_item_component() {
+                    var overlay = document.createElement('div');
+                    overlay.className = 'overlay';
+                    overlay.id = 'create_item_overlay'
+        
+                    var surface = document.createElement('div');
+                    surface.className = "create_surface";
+
+                    var heading = document.createElement('h4');
+                    heading.textContent = 'Enter Item Details';
+                    heading.style.marginBottom = '1rem'
+                    surface.appendChild(heading);
+
+        
+                    var form = document.createElement('form');
+                    form.className = "create_item_form"
+        
+                    let form_group_1 = document.createElement("div");
+                    form_group_1.className = 'form-group'
+                    let input_label_name = document.createElement("label");
+                    input_label_name.innerText = 'Name'
+                    let input_name = document.createElement("input")
+                    input_name.className = "form-control"
+                    input_name.placeholder = 'Enter name'
+                    input_name.name = "item_name"
+                    
+        
+                    let form_group_2 = document.createElement("div");
+                    form_group_2.className = 'form-group'
+                    let input_label_type = document.createElement("label");
+                    input_label_type.innerText = 'Type'
+                    let input_type = document.createElement("input")
+                    input_type.className = "form-control"
+                    input_type.placeholder = 'Enter type'
+                    input_type.name = "item_type"
+                     
+        
+                    let form_group_3 = document.createElement("div");
+                    form_group_3.className = 'form-group'
+                    let input_label_description = document.createElement("label");
+                    input_label_description.innerText = 'Description'
+                    let input_description = document.createElement("input")
+                    input_description.className = "form-control"
+                    input_description.placeholder = 'Enter description'
+                    input_description.name = 'item_description'
+        
+                    let form_group_4 = document.createElement("div");
+                    form_group_4.className = 'form-group'
+                    let input_label_title = document.createElement("label");
+                    input_label_title.innerText = 'Title'
+                    let input_title = document.createElement("input")
+                    input_title.className = "form-control"
+                    input_title.placeholder = 'Enter title'
+                    input_title.name = 'item_title'
+        
+                    let form_group_5 = document.createElement("div");
+                    form_group_5.className = 'form-group'
+                    let input_label_price = document.createElement("label");
+                    input_label_price.innerText = 'Price'
+                    let input_price = document.createElement("input")
+                    input_price.className = "form-control"
+                    input_price.placeholder = 'Enter price'
+                    input_price.name = 'item_price'
+        
+                    form_group_1.appendChild(input_label_name)
+                    form_group_1.appendChild(input_name)
+        
+                    form_group_2.appendChild(input_label_type)
+                    form_group_2.appendChild(input_type)
+        
+                    form_group_3.appendChild(input_label_description)
+                    form_group_3.appendChild(input_description)
+        
+                    form_group_4.appendChild(input_label_title)
+                    form_group_4.appendChild(input_title)
+        
+                    form_group_5.appendChild(input_label_price)
+                    form_group_5.appendChild(input_price)
+
+                    let br = document.createElement('br')
+        
+                    form.appendChild(form_group_1)
+                    form.appendChild(form_group_2)
+                    form.appendChild(form_group_3)
+                    form.appendChild(form_group_4)
+                    form.appendChild(form_group_5)
+                    form.appendChild(br)
+        
+                    surface.appendChild(form);
+        
+                    var nextbuttonLayer = document.createElement('div');
+                    nextbuttonLayer.className = 'bot_button_layer';
+                    nextbuttonLayer.id = "nextbuttonLayer"
+        
+                    var next_button = document.createElement('button');
+                    next_button.className = 'bot_button bot_button_reverse';
+                    next_button.textContent = 'Next';
+                    next_button.addEventListener('click', function(){
+                        process_surface_next();
+                    });
+
+                    var cancelbuttonLayer = document.createElement('div');
+                    cancelbuttonLayer.className = 'bot_button_layer';
+                    cancelbuttonLayer.id = "cancelbuttonLayer"
+                    
+
+                    var cancel_button = document.createElement('button');
+                    cancel_button.className = 'bot_button bot_button_reverse';
+                    cancel_button.textContent = 'Cancel';
+                    cancel_button.addEventListener('click', function(){
+                        process_surface_cancel();
+                    });
+
+        
+                    nextbuttonLayer.appendChild(next_button);
+                    cancelbuttonLayer.appendChild(cancel_button);
+        
+                    surface.appendChild(nextbuttonLayer);
+                    surface.appendChild(cancelbuttonLayer);
+        
+                    overlay.appendChild(surface);
+                    document.body.appendChild(overlay);
+                    overlay.style.display = 'block';
+                }
+
+
+                function process_surface_next() {
+                    console.log('Processing surface one');
+                    let form = document.querySelector('.create_item_form');
+                    let formValues = {};
+
+                    // Regular expression to match a valid float number
+                    const priceRegex = /^\d+(\.\d{1,2})?$/;
+
+                    // Validate and assign values to the formValues object
+                    if (form.elements.item_name.value.trim() === '') {
+                        alert('Please enter a valid item name');
+                        return;
+                    }
+                    formValues.item_name_value = form.elements.item_name.value;
+
+                    if (form.elements.item_type.value.trim() === '') {
+                        alert('Please enter a valid item type');
+                        return;
+                    }
+                    formValues.item_type_value = form.elements.item_type.value;
+
+                    if (form.elements.item_description.value.trim() === '') {
+                        alert('Please enter a valid item description');
+                        return;
+                    }
+                    formValues.item_description_value = form.elements.item_description.value;
+
+                    if (form.elements.item_title.value.trim() === '') {
+                        alert('Please enter a valid item title');
+                        return;
+                    }
+                    formValues.item_title_value = form.elements.item_title.value;
+
+    
+                    if (!priceRegex.test(form.elements.item_price.value.trim())) {
+                        alert('Please enter a valid item price');
+                        return;
+                    }
+                    const itemPrice = parseFloat(form.elements.item_price.value);
+                    formValues.item_price_value = itemPrice;
+                    
+                    if (localStorage.getItem('form_a_values')) {
+                            localStorage.removeItem('form_a_values');
+                    }
+
+                    localStorage.setItem('form_a_values', JSON.stringify(formValues));
+
+                    // set flag for having shown the create_item_form_media
+                    let create_item_form_media_flag = true 
+                    
+                    // Hide the current form
+                    form.style.display = 'none';
+                    let nextbuttonLayer = document.querySelector('#nextbuttonLayer')
+                    nextbuttonLayer.style.display='none'
+
+                    let cancelbuttonLayer = document.querySelector('#cancelbuttonLayer')
+                    
+                    
+
+
+                    // Create a new 'Back' button that comes before the 'Cancel' button
+                    var backButton = document.createElement('button');
+                    backButton.className = 'bot_button bot_button_reverse';
+                    backButton.textContent = 'Back';
+                    backButton.addEventListener('click', function () {
+                        process_surface_back();
+                    });
+
+                    // new back button that comes before the cancel button
+                    var backbuttonLayer = document.createElement('div');
+                    backbuttonLayer.className = 'bot_button_layer';
+                    backbuttonLayer.id = "backbuttonLayer"
+                    backbuttonLayer.appendChild(backButton);
+
+
+                    var submitButton = document.createElement('button')
+                    submitButton.className = 'bot_button bot_button_reverse';
+                    submitButton.textContent = 'Submit';
+                    submitButton.addEventListener('click', function () {
+                        process_surface_submit();
+                    });
+
+                    var submitbuttonLayer = document.createElement('div');
+                    submitbuttonLayer.className = 'bot_button_layer';
+                    submitbuttonLayer.id = "submitbuttonLayer"
+                    submitbuttonLayer.appendChild(submitButton);
+                    
+                    // b-0 manoeuvre
+                    if (localStorage.getItem('form_b_values')) {
+                            localStorage.removeItem('form_b_values');
+                    }
+
+                    form_b_state = {}
+                    form_b_state.current_display_url = null
+                    form_b_state.landing_media_url = null 
+                    form_b_state.order_media_url = null
+                    form_b_state.receipt_media_url = null
+                    form_b_state.instacard_media_url = null
+                    
+                    image_blob_object = {}
+                    image_blob_object.landing_media_blob = null
+                    image_blob_object.order_media_blob = null
+                    image_blob_object.receipt_media_blob = null
+                    image_blob_object.instacard_media_blob = null 
+                    
+                    
+
+
+                    // Create a new form with class name 'create_item_form_media' and set its inner HTML
+                    let newForm = document.createElement('form');
+                    newForm.className = 'create_item_form_media';
+
+                    newForm.addEventListener('submit', function(){
+                        event.preventDefault();
+                    })
+
+                    let row_div = document.createElement('div');
+                    row_div.className = "row";
+
+                    let column_one = document.createElement('div');
+                    column_one.className = "col-sm-6";
+
+                    let column_two = document.createElement('div');
+                    column_two.className = "col-sm-6";
+
+                    let upload_media_start_screen = document.createElement('div');
+                    upload_media_start_screen.className = "upload_media_start_screen";
+                    column_one.appendChild(upload_media_start_screen);
+
+                    let button_stack = document.createElement('div');
+                    button_stack.className = 'bot_app_button_stack';
+
+                    // Landing button
+                    let landing_media_button = document.createElement('button');
+                    landing_media_button.className = 'bot_button ';
+                    landing_media_button.textContent = "Landing";
+                    landing_media_button.addEventListener('click', function () {
+                        upload_landing_file();
+                    });
+
+                    let landing_media_button_layer = document.createElement('div');
+                    landing_media_button_layer.className = "bot_button_layer";
+                    landing_media_button_layer.appendChild(landing_media_button);
+
+
+                    // Order button
+                    let order_media_button = document.createElement('button');
+                    order_media_button.className = 'bot_button ';
+                    order_media_button.textContent = "Order";
+                    order_media_button.addEventListener('click', function () {
+                        upload_order_file();
+                    });
+
+                    let order_media_button_layer = document.createElement('div');
+                    order_media_button_layer.className = "bot_button_layer";
+                    order_media_button_layer.appendChild(order_media_button);
+
+                    // Receipt button
+                    let receipt_media_button = document.createElement('button');
+                    receipt_media_button.className = 'bot_button ';
+                    receipt_media_button.textContent = "Receipt";
+                    receipt_media_button.addEventListener('click', function () {
+                        upload_receipt_file();
+                    });
+
+                    let receipt_media_button_layer = document.createElement('div');
+                    receipt_media_button_layer.className = "bot_button_layer";
+                    receipt_media_button_layer.appendChild(receipt_media_button);
+
+                    // Instacard button
+                    let instacard_media_button = document.createElement('button');
+                    instacard_media_button.className = 'bot_button ';
+                    instacard_media_button.textContent = "Instacard";
+                    instacard_media_button.addEventListener('click', function () {
+                        upload_instacard_file();
+                    });
+
+                    let instacard_media_button_layer = document.createElement('div');
+                    instacard_media_button_layer.className = "bot_button_layer";
+                    instacard_media_button_layer.appendChild(instacard_media_button);
+
+                    button_stack.appendChild(landing_media_button_layer);
+                    button_stack.appendChild(order_media_button_layer);
+                    button_stack.appendChild(receipt_media_button_layer);
+                    button_stack.appendChild(instacard_media_button_layer);
+
+                    column_two.appendChild(button_stack)
+
+
+                    row_div.appendChild(column_one)
+                    row_div.appendChild(column_two)
+                    newForm.appendChild(row_div)
+
+
+
+                    // Append the new 'Back' button and the new form to the surface
+                    let surface = document.querySelector('.create_surface')
+                    
+                    surface.insertBefore(newForm, form)
+                    surface.insertBefore(document.createElement('br'), cancelbuttonLayer)
+                    surface.insertBefore(backbuttonLayer, cancelbuttonLayer);
+                    surface.insertBefore(submitbuttonLayer, backbuttonLayer)
+                    
+                
+                }
+
+
+
+                function process_surface_cancel() {
+                    console.log('Surface cancel');
+                    localStorage.clear()
+                    let overlay_el = document.getElementById("create_item_overlay");
+                    if (overlay_el) {
+                        overlay_el.remove();
+                    }
+
+                    
+                }
+
+
+                function process_surface_back() {
+                    console.log(`Processing surface back`);
+
+                    // Show the current form
+                    let form = document.querySelector('.create_item_form');
+                    form.style.display = 'block';
+
+                    // Remove the new form and the 'Back' button
+                    let newForm = document.querySelector('.create_item_form_media');
+                    if (newForm) {
+                        newForm.remove();
+                    }
+    
+                    let backButtonLayer = document.querySelector('#backbuttonLayer');
+                    if (backButtonLayer) {
+                        backButtonLayer.remove();
+                    }
+
+                    let submitbuttonLayer = document.querySelector('#submitbuttonLayer');
+                    if (submitbuttonLayer) {
+                        submitbuttonLayer.remove();
+                    }
+
+                    let nextbuttonLayer = document.querySelector('#nextbuttonLayer');
+                    if (nextbuttonLayer) {
+                        nextbuttonLayer.style.display='block';
+                    }
+
+                }
+            
+
+                function process_surface_submit() {
+                    console.log(`process_surface_submit`);
+                    let blobKeys = Object.keys(image_blob_object);
+
+                    for (let key of blobKeys) {
+                      if (!image_blob_object[key] || !(image_blob_object[key] instanceof File)) {
+                        alert(`Please upload ${key.split("_")[0]} media.`);
+                        return;
+                      }
+                    }
+
+                    // Creating a FormData object
+                    let formData = new FormData();
+
+                    // Appending attributes from form_a_values
+                    let formAValues = JSON.parse(localStorage.form_a_values);
+                    formData.append('item_name', formAValues.item_name_value);
+                    formData.append('item_type', formAValues.item_type_value);
+                    formData.append('item_title', formAValues.item_title_value);
+                    formData.append('item_description', formAValues.item_description_value);
+                    formData.append('item_price', formAValues.item_price_value);
+
+                    // Appending file blobs from image_blob_object
+                    formData.append('item_media_file', image_blob_object.landing_media_blob);
+                    formData.append('item_order_media_file', image_blob_object.order_media_blob);
+                    formData.append('item_receipt_media_file', image_blob_object.receipt_media_blob);
+                    formData.append('item_instacard_file', image_blob_object.instacard_media_blob);
+                    fetch('/items', {
+                      method: 'POST',
+                      body: formData
+                    })
+                      .then(response => {
+                        if (!response.ok) {
+                          throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                      })
+                      .then(data => {
+                        console.log('Success:', data);
+                        // Redirect to /admin upon success
+                        window.location.replace('/admin');
+                      })
+                      .catch(error => {
+                        console.error('Error:', error);
+                        // Display an alert with the error message
+                        alert('An error occurred. Please try again later.');
+                      });
+
+                }
+
+
+
+                function upload_landing_file() {
+                  console.log(`processing upload_landing_file`)
+
+                  let file_input_el = document.createElement('input');
+                  file_input_el.setAttribute('type', 'file');
+                  file_input_el.addEventListener('change', process_landing_media);
+                  file_input_el.click();
+                }
+
+                function process_landing_media(event) {
+                    console.log('process_landing_media');
+
+                    if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+                      alert('No file uploaded.');
+                      return;
+                    }
+
+
+                    let uploadedImage = event.target.files[0];
+
+                    
+                    image_blob_object.landing_media_blob = uploadedImage
+
+                    // Verify the extension for .jpg, .jpeg, .png only
+                    let fileExtension = uploadedImage.name.split('.').pop();
+                    let validExtensions = ['jpg', 'jpeg', 'png'];
+                    if (!validExtensions.includes(fileExtension)) {
+                      alert('Please upload a file with a valid extension (.jpg, .jpeg, or .png)');
+                      return;
+                    }
+
+                    // Update form_b_state.landing_media_url value from the blob object
+                    form_b_state.landing_media_url = URL.createObjectURL(uploadedImage);
+
+                    // Update form_b_state.current_display_url with the form_b_state.landing_media_url
+                    form_b_state.current_display_url = form_b_state.landing_media_url;
+
+                    // Append a child element of type img whose URL will point to that of form_b_state.current_display_url
+                    let surface = document.querySelector('.create_surface');
+
+                    let display_container = document.querySelector('.upload_media_start_screen')
+
+                    let imageElement = document.createElement('img');
+                    imageElement.style.width = '100%'
+                    imageElement.className = 'img-thumbnail'
+                    imageElement.src = form_b_state.current_display_url;
+
+                    display_container.innerHTML=``
+                    display_container.appendChild(imageElement)
+                    
+                }
+
+
+                function upload_order_file(){
+                    console.log("upload_order_file")
+                    let file_input_el = document.createElement('input');
+                    file_input_el.setAttribute('type', 'file');
+                    file_input_el.addEventListener('change', process_order_media);
+                    file_input_el.click();
+                }
+
+                function process_order_media(event){
+                    console.log('process_order_media')
+
+                    if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+                      alert('No file uploaded.');
+                      return;
+                    }
+
+                    let uploadedImage = event.target.files[0];
+
+                    image_blob_object.order_media_blob = uploadedImage
+
+                    // Verify the extension for .jpg, .jpeg, .png only
+                    let fileExtension = uploadedImage.name.split('.').pop();
+                    let validExtensions = ['jpg', 'jpeg', 'png'];
+                    if (!validExtensions.includes(fileExtension)) {
+                      alert('Please upload a file with a valid extension (.jpg, .jpeg, or .png)');
+                      return;
+                    }
+
+                    // Update form_b_state.order_media_url value from the blob object
+                    form_b_state.order_media_url = URL.createObjectURL(uploadedImage);
+
+                    // Update form_b_state.current_display_url with the form_b_state.order_media_url
+                    form_b_state.current_display_url = form_b_state.order_media_url;
+
+                    // Append a child element of type img whose URL will point to that of form_b_state.current_display_url
+                    let surface = document.querySelector('.create_surface');
+
+                    let display_container = document.querySelector('.upload_media_start_screen')
+
+                    let imageElement = document.createElement('img');
+                    imageElement.style.width = '100%'
+                    imageElement.className = 'img-thumbnail'
+                    imageElement.src = form_b_state.current_display_url;
+
+                    display_container.innerHTML=``
+                    display_container.appendChild(imageElement)
+                }
+
+                function upload_receipt_file(){
+                    console.log("upload_receipt_file")
+                    let file_input_el = document.createElement('input');
+                    file_input_el.setAttribute('type', 'file');
+                    file_input_el.addEventListener('change', process_receipt_media);
+                    file_input_el.click();
+
+                }
+
+                function process_receipt_media(event){
+                    console.log('process_receipt_media')
+
+                    if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+                      alert('No file uploaded.');
+                      return;
+                    }
+
+                    let uploadedImage = event.target.files[0];
+
+                    image_blob_object.receipt_media_blob = uploadedImage
+
+                    // Verify the extension for .jpg, .jpeg, .png only
+                    let fileExtension = uploadedImage.name.split('.').pop();
+                    let validExtensions = ['jpg', 'jpeg', 'png'];
+                    if (!validExtensions.includes(fileExtension)) {
+                      alert('Please upload a file with a valid extension (.jpg, .jpeg, or .png)');
+                      return;
+                    }
+
+                    // Update form_b_state.receipt_media_url value from the blob object
+                    form_b_state.receipt_media_url = URL.createObjectURL(uploadedImage);
+
+                    // Update form_b_state.current_display_url with the form_b_state.receipt_media_url
+                    form_b_state.current_display_url = form_b_state.receipt_media_url;
+
+                    // Append a child element of type img whose URL will point to that of form_b_state.current_display_url
+                    let surface = document.querySelector('.create_surface');
+
+                    let display_container = document.querySelector('.upload_media_start_screen')
+
+                    let imageElement = document.createElement('img');
+                    imageElement.style.width = '100%'
+                    imageElement.className = 'img-thumbnail'
+                    imageElement.src = form_b_state.current_display_url;
+
+                    display_container.innerHTML=``
+                    display_container.appendChild(imageElement)
+
+                }
+
+                function upload_instacard_file(){
+                    console.log('upload_instacard_file')
+                    let file_input_el = document.createElement('input');
+                    file_input_el.setAttribute('type', 'file');
+                    file_input_el.addEventListener('change', process_instacard_media);
+                    file_input_el.click();
+                }
+
+                function process_instacard_media(event){
+                    console.log('process_instacard_media')
+
+                    if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+                      alert('No file uploaded.');
+                      return;
+                    }
+
+
+                    let uploadedImage = event.target.files[0];
+
+                    
+                    image_blob_object.instacard_media_blob = uploadedImage
+
+                    // Verify the extension for .jpg, .jpeg, .png only
+                    let fileExtension = uploadedImage.name.split('.').pop();
+                    let validExtensions = ['jpg', 'jpeg', 'png'];
+                    if (!validExtensions.includes(fileExtension)) {
+                      alert('Please upload a file with a valid extension (.jpg, .jpeg, or .png)');
+                      return;
+                    }
+
+                    // Update form_b_state.instacard_media_url value from the blob object
+                    form_b_state.instacard_media_url = URL.createObjectURL(uploadedImage);
+
+                    // Update form_b_state.current_display_url with the form_b_state.instacard_media_url
+                    form_b_state.current_display_url = form_b_state.instacard_media_url;
+
+                    // Append a child element of type img whose URL will point to that of form_b_state.current_display_url
+                    let surface = document.querySelector('.create_surface');
+
+                    let display_container = document.querySelector('.upload_media_start_screen')
+
+                    let imageElement = document.createElement('img');
+                    imageElement.style.width = '100%'
+                    imageElement.className = 'img-thumbnail'
+                    imageElement.src = form_b_state.current_display_url;
+
+                    display_container.innerHTML=``
+                    display_container.appendChild(imageElement)
+                }
+
+            </script>
+            
+        </div>
+        {% endif %}
+
+    </div>
+    
+    <div class="bot_display_section  bot_display_section_big">
+        <div class="bot_app">
+            <div class="bot_app_screen">
+                <img class="bot_screen" src="{{ bot_view['current_bot_screen_media'][0] }}">
+            </div>
+            <h5 class="bot_header" id="bot_header_big">
+                <!-- Content for the header goes here -->
+            </h5>
+            <!-- Buttons Stack 1 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][0] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+            <!-- Buttons Stack 2 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][1] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+            <!-- Buttons Stack 3 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][2] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+            <!-- Buttons Stack 4 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][3] %}
+
+                    {% if item.label == 'Logout' %}
+                        <div class="bot_button_layer" onclick="process_reset_session()">
+            <button class="bot_button">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="type-label">
+                            {{ item.label }}
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <span class="type_label">
+                            <i class="fa {{ item.icon }}"></i>
+                        </span>
+                    </div>
+                </div>
+            </button>
+                        </div>
+                    {% else %}
+                        <form action="" method="get" class="bot_button_layer">
+            <input type="hidden" name="intent" value="{{ item.label }}">
+            <button class="bot_button">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="type-label">
+                            {{ item.label }}
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <span class="type_label">
+                            <i class="fa {{ item.icon }}"></i>
+                        </span>
+                    </div>
+                </div>
+            </button>
+                        </form>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+            
+        </div>
+    </div>
+    <div class="bot_display_section  bot_display_section_small">
+        <div class="bot_app">
+            <div class="bot_app_screen">
+                <img class="bot_screen" src="{{ bot_view['current_bot_screen_media'][1] }}">
+            </div>
+            <h5 class="bot_header" id="bot_header_small">
+                <!-- Content for the header goes here -->
+            </h5>
+            <!-- Buttons Stack 1 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][0] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+            <!-- Buttons Stack 2 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][1] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+            <!-- Buttons Stack 3 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][2] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+            <!-- Buttons Stack 4 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][3] %}
+
+                    {% if item.label == 'Logout' %}
+                        <div class="bot_button_layer" onclick="process_reset_session()">
+            <button class="bot_button">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="type-label">
+                            {{ item.label }}
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <span class="type_label">
+                            <i class="fa {{ item.icon }}"></i>
+                        </span>
+                    </div>
+                </div>
+            </button>
+                        </div>
+                    {% else %}
+                        <form action="" method="get" class="bot_button_layer">
+            <input type="hidden" name="intent" value="{{ item.label }}">
+            <button class="bot_button">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="type-label">
+                            {{ item.label }}
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <span class="type_label">
+                            <i class="fa {{ item.icon }}"></i>
+                        </span>
+                    </div>
+                </div>
+            </button>
+                        </form>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+            
+        </div>
+    </div>
+
+    </div>
+
+    
+    
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+         var dataTable = new DataTable('#auth_table');
+         var dataTable = new DataTable('#instaticket_table');
+         var dataTable = new DataTable('#order_table');
+         var dataTable = new DataTable('#receipt_table');
+    });
+</script>
+
+
+<script src="../static/node_modules/html5-qrcode/html5-qrcode.min.js"></script>
+<script src="../static/splide-3.1.2/dist/js/splide.js"></script>
+
+
+<script src="../static/js/main.js"></script>
+
+
+{% endblock content %}

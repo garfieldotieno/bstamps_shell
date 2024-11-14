@@ -1,0 +1,29 @@
+# local_media_production/Box_Parcel/test_folder/markup.yml
+upload_ready: False
+
+# Item Attributes (excluding media-related fields)
+item:
+  id: null
+  uid: ""
+  public: null
+  item_type: sample_type
+  title: sample_title
+  name: sample_name
+  price: 10.0
+  description: sample_description
+  
+  loca_beacon_set: []
+
+  item_media_url: ""  # Set item_media_url to an empty string
+  item_media_tel_url: ""  # Placeholder for item_media_tel_url
+  item_media_order_plate_url: ""
+  item_media_order_plate_tel_url: ""  # Placeholder for item_media_order_plate_tel_url
+  item_media_receipt_plate_url: ""
+  item_media_receipt_plate_tel_url: ""  # Placeholder for item_media_receipt_plate_tel_url
+  item_media_instacard_big_plate_url: ""
+  item_media_instacard_big_plate_tel_url: ""  # Placeholder for item_media_instacard_big_plate_tel_url
+  item_media_instacard_small_plate_url: ""
+  item_media_instacard_small_plate_tel_url: ""  # Placeholder for item_media_instacard_small_plate_tel_url
+  
+  publish_ready: 0
+  timestamp: null  # Set timestamp to null

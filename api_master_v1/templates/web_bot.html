@@ -1,0 +1,356 @@
+{% extends 'side_nav_base.html' %}
+
+{% block content %}
+{% if session_data.activity_json.current_intent == 'Check-in'%}
+    <div class="parent_display_container parent_display_container_prompt">
+        <div class="small_display_section">
+            <div class="bot_display_section">
+                <div class="bot_app">
+                    <div class="bot_app_screen">
+                        <img class="bot_screen" src="{{ bot_view['current_bot_screen_media'][1] }}">
+                    </div>
+                    <h5 class="bot_header" id="bot_header_big">
+                        <!-- Content for the header goes here -->
+                    </h5>
+                    <!-- reader_section -->
+                    <div id="" class="bot_input_section" >
+                        
+                    </div>
+                    <!-- Buttons Stack 1 -->
+                    <div class="bot_app_button_stack">
+                        {% for item in bot_view['current_bot_buttons'][0] %}
+
+                        {% if item.label == 'Upload' %}
+                        <div class="bot_button_layer">
+                            <!-- <input type="hidden" name="intent" value="{{ item.label }}"> -->
+                            <button class="bot_button" onclick="upload_file()">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <span class="type-label">
+                                            {{ item.label }}
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="type_label">
+                                            <i class="{{ item.icon }}"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        {% endif %}
+
+                        {% if item.label != 'Upload' %}
+                        <form action="" method="get" class="bot_button_layer">
+                            <input type="hidden" name="intent" value="{{ item.label }}">
+                            <button class="bot_button">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <span class="type-label">
+                                            {{ item.label }}
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="type_label">
+                                            <i class="fa {{ item.icon }}"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </button>
+                        </form>
+                        {% endif %}
+
+                        
+                        {% endfor %}
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endif %}
+
+    
+{% if session_data.activity_json.current_intent != 'Check-in'%}
+    <div class="parent_display_container">
+    <div class="large_display_section">
+        {% if (session_data.activity_json.current_intent == 'Landing_page') or (session_data.activity_json.current_intent == None ) %}
+        
+        <div class="item_card_container">
+            <div class="bot_button_layer top_back_btn_hidden">
+                <button class="bot_button" id="home_btn" onclick="show_small_bot_home()">
+                    Home
+                </button>
+            </div>
+            <br>
+            {% for item in resource_data %}
+            <!-- Item Card for a Single Item -->
+            {% if item.public %}
+            <div class="item_card">
+
+                <img class="item_card_image" src="/static/media_store/{{ item.item_media_url }}">
+                <div class="item_info">
+                    <div class="item_info_title">
+                        <h3 class="item_title">{{ item.title }}</h3>
+                        <p class="item_price">Ksh {{ item.price }}</p>
+                    </div>
+                    <p class="item_name">{{ item.name }}</p>
+                    <p class="item_description">{{ item.description }}</p>
+                </div>
+                <form class="item_get_button_layer itemForm" id="itemForm">
+                    <input type="hidden" name="make_order_item_id" value="{{ item.id }}">
+                    <button class="item_get_button">Get</button>
+                </form>
+                
+            </div>
+            {% endif %}
+            <!-- End of Item Card for a Single Item -->
+            
+            {% endfor %}
+        </div>
+        
+        {% elif session_data.activity_json.current_intent == 'Call' %}
+        <script>
+            function callShop() {
+                let phone_no = '+254703103960';
+                window.location = `tel:${phone_no}`;
+            }
+        
+            window.onload = function() {
+                callShop();
+            };
+        </script>
+        <div class="item_card_container">
+            <div class="bot_button_layer top_back_btn_hidden">
+                <button class="bot_button" id="home_btn" onclick="show_small_bot_home()">
+                    Home
+                </button>
+            </div>
+            <br>
+            {% for item in resource_data %}
+            <!-- Item Card for a Single Item -->
+            {% if item.public %}
+            <div class="item_card">
+                <img class="item_card_image" src="/static/media_store/{{item.item_media_url }}">
+                <div class="item_info">
+                    <div class="item_info_title">
+                        <h3 class="item_title">{{ item.title }}</h3>
+                        <p class="item_price">Ksh {{ item.price }}</p>
+                    </div>
+                    <p class="item_name">{{ item.name }}</p>
+                    <p class="item_description">{{ item.description }}</p>
+                </div>
+                <form class="item_get_button_layer itemForm" id="itemForm">
+                    <input type="hidden" name="checkout_item_uid" value="{{ item.uid }}">
+                    <button class="item_get_button">Get</button>
+                </form>
+                
+            </div>
+            {% endif %}
+            <!-- End of Item Card for a Single Item -->
+            {% endfor %}
+        </div>     
+        {% elif session_data.activity_json.current_intent == 'Mail' %}
+        <script>
+            function mailShop(){
+                let shop_email = 'wowza.africa@gmail.com';
+                window.location = `mailto:${shop_email}`;
+            }
+        
+            window.onload = function() {
+                mailShop();
+            };
+        </script>
+        <div class="item_card_container">
+            <div class="bot_button_layer top_back_btn_hidden">
+                <button class="bot_button" id="home_btn" onclick="show_small_bot_home()">
+                    Home
+                </button>
+            </div>
+            <br>
+            {% for item in resource_data %}
+            <!-- Item Card for a Single Item -->
+            {% if item.public %}
+            <div class="item_card">
+                <img class="item_card_image" src="/static/media_store/{{item.item_media_url }}">
+                <div class="item_info">
+                    <div class="item_info_title">
+                        <h3 class="item_title">{{ item.title }}</h3>
+                        <p class="item_price">Ksh {{ item.price }}</p>
+                    </div>
+                    <p class="item_name">{{ item.name }}</p>
+                    <p class="item_description">{{ item.description }}</p>
+                </div>
+                <form class="item_get_button_layer itemForm" id="itemForm">
+                    <input type="hidden" name="checkout_item_uid" value="{{ item.uid }}">
+                    <button class="item_get_button">Get</button>
+                </form>
+                
+            </div>
+            {% endif %}
+            <!-- End of Item Card for a Single Item -->
+            {% endfor %}
+        </div>
+        {% elif session_data.activity_json.current_intent == 'About' %}
+        
+        <div class="about_info">
+            <div class="bot_button_layer top_back_btn_hidden top_back_btn_layer_reverse">
+                <button class="bot_button bot_button_reverse" id="home_btn" onclick="show_small_bot_home()">
+                    Home
+                </button>
+            </div>
+            <br>
+            <h3>Wowza</h3>
+            {% for section in session_data.response_json.data %}
+            <div class="setup_section">
+                <div class="row">
+                    {% if section.label == 'Setup' %}
+                    <div class="col-sm-6">
+                        <lottie-player src="{{ section.lottie_url }}" background="transparent"  speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+                    </div>
+                    <div class="col-sm-6">
+                        {{ section.paragraph }}
+                    </div>
+                    {% else %}
+                    <div class="col-sm-6">
+                        {{ section.paragraph }}
+                    </div>
+                    <div class="col-sm-6">
+                        <lottie-player src="{{ section.lottie_url }}" background="transparent"  speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+                    </div>
+                    {% endif %}
+                </div>
+                
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% endif %}
+    </div>
+    
+    <div class="bot_display_section  bot_display_section_big">
+        <div class="bot_app">
+            <div class="bot_app_screen">
+                <img class="bot_screen" src="{{ bot_view['current_bot_screen_media'][0] }}">
+            </div>
+            <h5 class="bot_header" id="bot_header_big">
+                <!-- Content for the header goes here -->
+            </h5>
+            <!-- Buttons Stack 1 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][0] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+            <!-- Buttons Stack 2 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][1] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="bot_display_section  bot_display_section_small">
+        <div class="bot_app">
+            <div class="bot_app_screen">
+                <img class="bot_screen" src="{{ bot_view['current_bot_screen_media'][1] }}">
+            </div>
+            <h5 class="bot_header" id="bot_header_small">
+                <!-- Content for the header goes here -->
+            </h5>
+            <!-- Buttons Stack 1 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][0] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+            <!-- Buttons Stack 2 -->
+            <div class="bot_app_button_stack">
+                {% for item in bot_view['current_bot_buttons'][1] %}
+                <form action="" method="get" class="bot_button_layer">
+                    <input type="hidden" name="intent" value="{{ item.label }}">
+                    <button class="bot_button">
+                        <div class="row">
+                            <div class="col-8">
+                                <span class="type-label">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span class="type_label">
+                                    <i class="fa {{ item.icon }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    </div>
+{% endif %}
+    
+    
+    
+
+
+
+<script src="../static/node_modules/html5-qrcode/html5-qrcode.min.js"></script>
+<script src="../static/splide-3.1.2/dist/js/splide.js"></script>
+
+
+<script src="../static/js/main.js"></script>
+
+
+{% endblock content %}

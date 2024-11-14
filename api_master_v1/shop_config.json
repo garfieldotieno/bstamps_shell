@@ -1,0 +1,15 @@
+{
+    "shop_name":"Stamps",
+    "shop_uid":"ASRE234XXZ",
+    "shop_call_number":"0703103960",
+    "shop_whatsapp_number":"0703103960",
+    "shop_email":"bucketstamps@gmail.com",
+   
+    "empty_stamps_lottie_url":"https://assets10.lottiefiles.com/temp/lf20_Celp8h.json",
+    
+    "process_qr_lottie_url":"static/lottie/5653-scan-qr-code.json",
+    "shop_instagram_url":"https://www.instagram.com/bucketstamps/",
+    
+    "shop_banner_one":"banner_one.svg",
+    "shop_api_key":"23MACSERIES201"
+}

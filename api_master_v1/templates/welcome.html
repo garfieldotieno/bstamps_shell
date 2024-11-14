@@ -1,0 +1,27 @@
+{% extends 'side_nav_base.html' %}
+
+{% block content %}
+<div class="parent_display_container">
+    
+</div>
+
+<script src="../static/node_modules/html5-qrcode/html5-qrcode.min.js"></script>
+<script src="../static/splide-3.1.2/dist/js/splide.js"></script>
+
+{% if session_data.session_type == 'Developer' %}
+<script src="../static/js/developer.js"></script>
+{% elif session_data.session_type == 'Admin' %}
+<script src="../static/js/admin.js"></script>
+{% elif session_data.session_type == 'Agent' %}
+<script src="../static/js/agent.js"></script>
+{% elif session_data.session_type == 'Regular' %}
+<script src="../static/js/main.js"></script>
+{% else %}
+<script src="../static/js/main.js"></script>
+{% endif %}
+
+<script>
+ 
+</script>
+
+{% endblock content %}

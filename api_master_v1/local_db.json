@@ -1,0 +1,123 @@
+{
+    "items_of_purchase": [
+      {
+        "uid": "001",
+        "name": "Tax Service",
+        "type": "Callback",
+        "price": 350.00,
+        "description": "Subscribe Today for a callback card and take charge of your Tax.",
+        "title": "Callback Card",
+        "created_at": "2022-01-01T00:00:00",
+        "item_media_url": "static/landing_images/callback_bg_four.jpg",
+        "item_media_order_plate":"static/media_store/plate_one_half_reverse.jpg",
+        "item_media_receipt_plate":"static/media_store/plate_one_full.jpg",
+        "item_media_instaticket_big_plate":"static/media_store/plate_one_full_centerd.jpg",
+        "item_media_instaticket_small_plate":"static/media_store/plate_one_half.jpg"
+      },
+      {
+        "uid": "002",                     
+        "name": "Search",
+        "type": "Location",
+        "price": 100,
+        "description": "Order a location card today and be able to search for items and services within your area ",
+        "title": "Location Card",
+        "created_at": "2022-01-01T00:00:00",
+        "item_media_url": "static/landing_images/plate_one_half_reversebase_test.jpg",
+        "item_media_order_plate":"static/media_store/plate_two_half_reverse.jpg",
+        "item_media_receipt_plate":"static/media_store/plate_two_full.jpg",
+        "item_media_instaticket_big_plate":"static/media_store/plate_two_full_centerd.jpg",
+        "item_media_instaticket_small_plate":"static/media_store/plate_two_half.jpg"
+      },
+      {
+        "uid": "003",
+        "name": "Travel Service",
+        "type": "Travel",
+        "price": 350.00,
+        "description": "Subscribe Now and get latest information on prices, routes and booking travel in a simple and secure way.",
+        "title": "Travel Card",
+        "created_at": "2022-01-01T00:00:00",
+        "item_media_url": "static/landing_images/travel_card_landing_image.jpg",
+        "item_media_order_plate":"static/media_store/plate_three_half_reverse.jpg",
+        "item_media_receipt_plate":"static/media_store/plate_three_full.jpg",
+        "item_media_instaticket_big_plate":"static/media_store/plate_three_full_centerd.jpg",
+        "item_media_instaticket_small_plate":"static/media_store/plate_three_half.jpg"
+      },
+      {
+        "uid":"004",
+        "name": "Entertainment service",
+        "type": "Entertainment",
+        "price": 350.00,
+        "description": "Subscribe Now and get latest information on prices, events, entertainment and booking tickets in a simple and secure way.",
+        "title": "Entertainment Card",
+        "created_at": "2022-01-01T00:00:00",
+        "item_media_url": "static/landing_images/entertainment_card_landing_image.jpg",
+        "item_media_order_plate":"static/media_store/plate_four_half_reverse.jpg",
+        "item_media_receipt_plate":"static/media_store/plate_four_full.jpg",
+        "item_media_instaticket_big_plate":"static/media_store/plate_four_full_centerd.jpg",
+        "item_media_instaticket_small_plate":"static/media_store/plate_four_half.jpg"
+      
+      }
+    ],
+
+    "business_items_of_sale":[
+      {
+        "uid": "005",
+        "name": "Website, Apps, System",
+        "type": "BusinessWeb",
+        "price": 15000.00,
+        "description": "Order a web card today for your business and get access to a personalized experience for web development ",
+        "title": "Web Card",
+        "created_at": "2022-01-01T00:00:00",
+        "item_media_url": "static/landing_images/business_web_card.jpg",
+        "item_media_order_plate":"static/media_store/plate_five_half_reverse.jpg",
+        "item_media_receipt_plate":"static/media_store/plate_five_full.jpg",
+        "item_media_instaticket_big_plate":"static/media_store/plate_five_full_centerd.jpg",
+        "item_media_instaticket_small_plate":"static/media_store/plate_five_half.jpg"
+      },
+      {
+        "uid": "006",
+        "name": "Directory, Fulfillment",
+        "type": "BusinessLocation",
+        "price": 350,
+        "description": "Order a location card today and be able to sell items and services within your area ",
+        "title": "Location Card",
+        "created_at": "2022-01-01T00:00:00",
+        "item_media_url": "static/landing_images/business_location_card.jpg",
+        "item_media_order_plate":"static/media_store/plate_six_half_reverse.jpg",
+        "item_media_receipt_plate":"static/media_store/plate_six_full.jpg",
+        "item_media_instaticket_big_plate":"static/media_store/plate_six_full_centerd.jpg",
+        "item_media_instaticket_small_plate":"static/media_store/plate_six_half.jpg"
+      },
+      {
+        "uid": "007",
+        "name": "Website, Social media, Print",
+        "type": "BusinessCopy",
+        "price": 350,
+        "description": "Order a copywriting card now and take charge of your copy for your business or any other venture. We offer a variety of services for websites upto social media pages. ",
+        "title": "Copy Card",
+        "created_at": "2022-01-01T00:00:00",
+        "item_media_url": "static/landing_images/business_copy_card.jpg",
+        "item_media_order_plate":"static/media_store/plate_seven_half_reverse.jpg",
+        "item_media_receipt_plate":"static/media_store/plate_seven_full.jpg",
+        "item_media_instaticket_big_plate":"static/media_store/plate_seven_full_centerd.jpg",
+        "item_media_instaticket_small_plate":"static/media_store/plate_seven_half.jpg"
+      }
+    ],
+
+    "about_shop":{
+      "shop_description_lottie_url":"https://assets6.lottiefiles.com/packages/lf20_OKry2Fjrb9.json",
+      "shop_description_lottie_two_url":"https://assets6.lottiefiles.com/packages/lf20_7fy2yzzs.json",
+      "shop_description_lottie_three_url":"https://assets4.lottiefiles.com/packages/lf20_ofa3xwo7.json",
+      "shop_description_lottie_four_url":"https://assets6.lottiefiles.com/packages/lf20_ocywp0yl.json",
+      "shop_checkin_lottie_url":"https://assets1.lottiefiles.com/packages/lf20_mndtnwli.json"
+    },
+
+    "orders":[],
+    "payments":[],
+
+    "tasks":[],
+    "receipts":[],
+    
+    "instatickets":[]
+
+}

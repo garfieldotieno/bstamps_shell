@@ -1,0 +1,412 @@
+{% extends 'side_nav_base.html' %}
+
+{% block content %}
+   
+
+    <div class="parent_display_container">
+    <div class="large_display_section">
+        {% if (session_data.activity_json.current_intent == 'Landing_page') or (session_data.activity_json.current_intent == None ) %}
+        
+        <div class="item_card_container">
+            <div class="bot_button_layer top_back_btn_hidden">
+                <button class="bot_button" id="home_btn" onclick="show_small_bot_home()">
+                    Home
+                </button>
+            </div>
+            <br>
+            <br>
+            <br>
+            
+            <div class="session_data_holder">
+                <div class="session_surface">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div>
+                                <strong>User ID:</strong> {{session_data.id}}
+                            </div>
+                            <div>
+                                <strong>User Type:</strong> {{session_data.session_type}}
+                            </div>
+                            <div>
+                                <strong>Session ID:</strong> {{session_data.uid}}
+                            </div>
+                            <!-- Add other session details here -->
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                <strong>Contact:</strong> {{session_data.activity_json['contact']}}
+                            </div>
+                            <div>
+                                <strong>Start Time:</strong> 2023-10-26 14:30:00
+                            </div>
+                            <div>
+                                <strong>End Time:</strong> 2023-10-26 15:30:00
+                            </div>
+                            <!-- Add other session details here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4>Auth cards</h4>
+            <br>
+            <div class="card_data_holder">
+                <div class="card_surface">
+                   <table id="auth_table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Time</th>
+                                <th>Card</th>
+                                <th>Session</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for card in cards %}
+
+                            {% if card.payload['session_data']['session_type'] == "Developer" %}
+
+                                    {% if card.payload['session_data']['card_type'] == "Auth_Reset_Card" %}
+                                        <tr>
+                                            <td>
+                                                {{ card.id }}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.timestamp }}                                                
+                                            </td>
+                                            <td>
+                                                {{card.payload['session_data']['card_type']}}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.payload['session_data']['session_type'] }}                                                
+                                            </td>
+                                            <td class="action_zone_cell">
+                                                <form class="item_get_button_layer">
+                                                    <input type="hidden" name="auth_card_uid" value="{{ card.uid }}">
+                                                    <button class="item_get_button">Gen Auth Card</button>
+                                                </form>
+                                                <form class="item_get_button_layer">
+                                                    <input type="hidden" name="new_auth_reset_card_uid" value="{{ card.uid }}">
+                                                    <button class="item_get_button">Gen Admin Reset Card</button>
+                                                </form>                
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+
+                                    {% if card.payload['session_data']['card_type'] == "Auth_Card" %}
+                                        <tr>
+                                            <td>
+                                                {{ card.id }}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.timestamp }}                                                
+                                            </td>
+                                            <td>
+                                                {{card.payload['session_data']['card_type']}}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.payload['session_data']['session_type'] }}                                                
+                                            </td>
+                                            <td class="action_zone_cell">
+                                                <form class="item_get_button_layer" >
+                                                    <input type="hidden" name="delete_card_uid" value="{{ card.uid }}">
+                                                    <button class="item_get_button">Delete</button>
+                                                </form>
+
+                                                
+                                                <script>
+                                                function process_download_card(){
+                                                    event.preventDefault()
+                                                    download_url = event.target
+                                                    const link = document.createElement('a');
+                                                    link.href = download_url;
+                                                    link.download = "file_name";
+                                                    link.click();
+                                                    link.remove();
+
+                                                            
+                                                }
+        
+                                                </script>
+                                                
+                                                
+                                                <div class="item_get_button_layer">
+                                                    <a href="/{{card.url.split('/')[-3]}}/{{card.url.split('/')[-2]}}/{{card.url.split('/')[-1]}}" class="item_get_button btn" onclick="process_download_card()">Download</a>
+                                                </div>
+                                                
+                                               
+                                                
+                    
+                                                {% if new_list and new_list != [] %}
+                                                    {% if new_list[0][card.uid] %}
+                                                        <form class="item_get_button_layer itemForm" >
+                                                            <input type="hidden" name="delete_card_uid" value="{{ card.uid }}">
+                                                            <button class="item_get_button" onclick="copyToClipboard('{{ new_list[0][card.uid] }}')">{{ new_list[0][card.uid] }}</button>
+                                                        </form>
+                                                        <script>
+                                                            function copyToClipboard(text) {
+                                                                const el = document.createElement('textarea');
+                                                                el.value = text;
+                                                                el.setAttribute('readonly', '');
+                                                                el.style.position = 'absolute';
+                                                                el.style.left = '-9999px';
+                                                                document.body.appendChild(el);
+                                                                el.select();
+                                                                document.execCommand('copy');
+                                                                document.body.removeChild(el);
+                                                                // Optional alert to indicate the text has been copied.
+                                                                alert("Copied to clipboard: " + text);
+                                                            }
+                                                        </script>
+                                                    {% endif %}
+                                                {% endif %}
+
+                                                
+
+
+                                            </td>
+
+                                        </tr>
+                                    {% endif %}
+
+                            {% endif %}
+                            
+                            <!-- admin maneno -->
+                            {% if card.payload['session_data']['session_type'] == "Admin" %}
+                                    
+                                    {% if card.payload['session_data']['card_type'] == "Auth_Reset_Card" %}
+                                        <tr>
+                                            <td>
+                                                {{ card.id }}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.timestamp }}                                                
+                                            </td>
+                                            <td>
+                                                {{card.payload['session_data']['card_type']}}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.payload['session_data']['session_type'] }}                                                
+                                            </td>
+                                            <td class="action_zone_cell">
+                                                <form class="item_get_button_layer" >
+                                                    <input type="hidden" name="delete_card_uid" value="{{ card.uid }}">
+                                                    <button class="item_get_button">Delete</button>
+                                                </form>
+
+                                                
+                                                <script>
+                                                    function process_download_card(){
+                                                        event.preventDefault()
+                                                        download_url = event.target
+                                                        const link = document.createElement('a');
+                                                        link.href = download_url;
+                                                        link.download = "file_name";
+                                                        link.click();
+                                                        link.remove();
+    
+                                                                
+                                                    }
+            
+                                                    </script>
+                                                    
+                                                    
+                                                    <div class="item_get_button_layer">
+                                                        <a href="/{{card.url.split('/')[-3]}}/{{card.url.split('/')[-2]}}/{{card.url.split('/')[-1]}}" class="item_get_button btn" onclick="process_download_card()">Download</a>
+                                                    </div>
+                                               
+                    
+                                                    {% if new_list and new_list != [] %}
+                                                    {% if new_list[0][card.uid] %}
+                                                        <form class="item_get_button_layer itemForm" >
+                                                            <input type="hidden" name="delete_card_uid" value="{{ card.uid }}">
+                                                            <button class="item_get_button" onclick="copyToClipboard('{{ new_list[0][card.uid] }}')">{{ new_list[0][card.uid] }}</button>
+                                                        </form>
+                                                        <script>
+                                                            function copyToClipboard(text) {
+                                                                const el = document.createElement('textarea');
+                                                                el.value = text;
+                                                                el.setAttribute('readonly', '');
+                                                                el.style.position = 'absolute';
+                                                                el.style.left = '-9999px';
+                                                                document.body.appendChild(el);
+                                                                el.select();
+                                                                document.execCommand('copy');
+                                                                document.body.removeChild(el);
+                                                                // Optional alert to indicate the text has been copied.
+                                                                alert("Copied to clipboard: " + text);
+                                                            }
+                                                        </script>
+                                                    {% endif %}
+                                                {% endif %}
+                                                
+                                                
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+
+                                    {% if card.payload['session_data']['card_type'] == "Auth_Card" %}
+                                        <tr>
+                                            <td>
+                                                {{ card.id }}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.timestamp }}                                                
+                                            </td>
+                                            <td>
+                                                {{card.payload['session_data']['card_type']}}                                                
+                                            </td>
+                                            <td>
+                                                {{ card.payload['session_data']['session_type'] }}                                                
+                                            </td>
+                                            <td class="action_zone_cell">
+                                                                        
+                                            </td>
+                                        </tr>
+                                    {% endif %} 
+                                       
+                            {% endif %}
+                            
+                            
+
+                            {% endfor %}
+                        </tbody>
+                   </table>
+                    
+                </div>
+            </div>
+               
+        </div>
+        
+        {% endif %}
+    </div>
+    
+    <div class="bot_display_section  bot_display_section_big">
+        <div class="bot_app">
+            <div class="bot_app_screen">
+                <img class="bot_screen" src="{{ bot_view['current_bot_screen_media'][0] }}">
+            </div>
+            <h5 class="bot_header" id="bot_header_big">
+                <!-- Content for the header goes here -->
+            </h5>
+            <!-- Buttons Stack 1 -->
+            <div class="bot_app_button_stack">
+            
+                {% for item in bot_view['current_bot_buttons'] %}
+                {% if item.label == 'Logout' %}
+                    <div class="bot_button_layer" onclick="process_reset_session()">
+                <button class="bot_button">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">
+                                {{ item.label }}
+                            </span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label">
+                                <i class="fa {{ item.icon }}"></i>
+                            </span>
+                        </div>
+                    </div>
+                </button>
+                    </div>
+                {% else %}
+                    <form action="" method="get" class="bot_button_layer">
+                <input type="hidden" name="intent" value="{{ item.label }}">
+                <button class="bot_button">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">
+                                {{ item.label }}
+                            </span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label">
+                                <i class="fa {{ item.icon }}"></i>
+                            </span>
+                        </div>
+                    </div>
+                </button>
+                    </form>
+                {% endif %}
+                {% endfor %}
+    
+            </div>
+            
+        </div>
+    </div>
+    <div class="bot_display_section  bot_display_section_small">
+        <div class="bot_app">
+            <div class="bot_app_screen">
+                <img class="bot_screen" src="{{ bot_view['current_bot_screen_media'][1] }}">
+            </div>
+            <h5 class="bot_header" id="bot_header_small">
+                <!-- Content for the header goes here -->
+            </h5>
+            <!-- Buttons Stack 1 -->
+            <div class="bot_app_button_stack">
+            
+            {% for item in bot_view['current_bot_buttons'] %}
+            {% if item.label == 'Logout' %}
+                <div class="bot_button_layer" onclick="process_reset_session()">
+            <button class="bot_button">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="type-label">
+                            {{ item.label }}
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <span class="type_label">
+                            <i class="fa {{ item.icon }}"></i>
+                        </span>
+                    </div>
+                </div>
+            </button>
+                </div>
+            {% else %}
+                <form action="" method="get" class="bot_button_layer">
+            <input type="hidden" name="intent" value="{{ item.label }}">
+            <button class="bot_button">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="type-label">
+                            {{ item.label }}
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <span class="type_label">
+                            <i class="fa {{ item.icon }}"></i>
+                        </span>
+                    </div>
+                </div>
+            </button>
+                </form>
+            {% endif %}
+            {% endfor %}
+
+            </div>
+            
+        </div>
+    </div>
+
+    </div>
+
+
+    
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+         var dataTable = new DataTable('#auth_table');
+    });
+</script>
+
+
+<script src="../static/node_modules/html5-qrcode/html5-qrcode.min.js"></script>
+<script src="../static/splide-3.1.2/dist/js/splide.js"></script>
+
+
+<script src="../static/js/main.js"></script>
+
+
+{% endblock content %}

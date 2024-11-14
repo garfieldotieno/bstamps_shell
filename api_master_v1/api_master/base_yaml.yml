@@ -1,0 +1,138 @@
+---
+web_bot:
+  intents:
+    - 
+      title: Landing_page
+      response_json: 
+        current_resource: Item
+        current_bot_buttons:
+          - 
+            - label: Check-in
+              icon: fa fa-qrcode
+            - label: Refresh
+              icon: fa fa-fresh
+
+          - 
+            - label: Call
+              icon: fa fa-phone
+            - label: Mail
+              icon: fa fa-envelope
+            - label: About
+              icon: fa fa-info-circle
+        current_bot_screen_media:
+          - static/bot_media/wake_up_big.gif
+        current_bot_header: []
+
+    - 
+      title: About
+      response_json:
+        current_resource: About_Mod
+        current_bot_buttons:
+          - 
+            - label: Check-in
+              icon: fa fa-qrcode
+            - label: Refresh
+              icon: fa fa-fresh
+
+          - 
+            - label: Call
+              icon: fa fa-phone
+            - label: Mail
+              icon: fa fa-envelope
+            - label: About
+              icon: fa fa-info-circle
+        current_bot_screen_media:
+          - static/bot_media/wake_up_big.gif
+        current_bot_header: []
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+tel_bot:
+
+  top_level_response_pages :
+    - media:
+        - type: Picture
+          uid: 'AgACAgQAAxkBAAIUs2QN5v4EcfnsAiCpzkwdhj-4x3G1AAL7ujEb2V9xUEtrtyS9cq8TAQADAgADbQADLwQ'
+      message: You need to get a new session for continued use
+      navigation_id: 0
+      navigation_title: Authentication
+      resource: usersessionprofile
+    
+    - media:
+        - type: picture
+          uid: AgACAgQAAxkBAAIOZWP0yae0ZTDJzkFUkZnbsLEr3hchAALdvjEbtFqhUx3hARw4S9UOAQADAgADbQADLgQ
+        - type: sticker
+          uid: CAACAgIAAxkBAAIOGmPzTkcwrA5jeHJaymAwByHwldQEAAKGAAOmysgMdfHgn18JJQIuBA
+      message: you can manage the shopping resources from here.
+      navigation_id: 1
+      navigation_title: Shopping
+      resource: shopping
+    
+    - media:
+        - type: picture
+          uid: AgACAgQAAxkBAAIOZGP0yVRUUWRtksCRR_rH5mK9LBwbAALcvjEbtFqhU72akfcTqc52AQADAgADbQADLgQ
+      message: 'You can manage business resources from here. '
+      navigation_id: 2
+      navigation_title: Business
+      resource: business
+    
+    - media:
+        - type: picture
+          uid: AgACAgQAAxkBAAIOaWP0zEgDGIexyvAsuTNEaU2kTq7BAALmvjEbtFqhU88m7nkpbDpdAQADAgADbQADLgQ
+      message: Sure, You can manage the location resources from here
+      navigation_id: 3
+      navigation_title: Location
+      resource: location
+    
+    - media:
+        - type: picture
+          uid: AgACAgQAAxkBAAIOZmP0ydRprspq2SI-VSLowcYx2AfIAALfvjEbtFqhU_rxayORnYDKAQADAgADbQADLgQ
+      message: Sure, You can manage the orders from here
+      navigation_id: 4
+      navigation_title: Orders
+      resource: order
+    
+    - media:
+        - type: picture
+          uid: AgACAgQAAxkBAAIOZ2P0ygXrC4MsP0bUprYimvEmJgt-AALgvjEbtFqhU6DoSSeXUfViAQADAgADbQADLgQ
+      message: Sure, you can manage the tasks from here
+      navigation_id: 5
+      navigation_title: Tasks
+      resource: task
+    
+    - media:
+        - type: picture
+          uid: AgACAgQAAxkBAAIOaGP0yjcasIf30GEBxFohBRGyiBQvAALhvjEbtFqhU8Z24mkzG7umAQADAgADbQADLgQ
+      message: Sure, you can manage payments from here
+      navigation_id: 6
+      navigation_title: Payments
+      resource: payment
+  
+  top_level_navigation_buttons:
+    - buttons: ['Browse', 'Select', 'Cancel']
+
+    - buttons: ['Browse', 'Back', 'Select', 'Cancel']
+
+  top_level_navigation_intent_map:
+    Browse: telegram_page_browse
+    Select: telegram_page_select_current_response_item
+    Back: telegram_page_browse_back
+    Cancel: telegram_page_return_home

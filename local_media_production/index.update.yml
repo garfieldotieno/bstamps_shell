@@ -1,0 +1,19 @@
+files:
+  deleted_files:
+    deleted_files: true
+    modified_files: true
+    new_files: true
+  modified_files: {}
+  new_files:
+    Box_Parcel:
+      test_folder:
+        markup.yml: true
+        plates:
+          plate_one_full.jpg: true
+          plate_one_full_centerd.jpg: true
+          plate_one_half.jpg: true
+          plate_one_half_reverse.jpg: true
+        squares:
+          web_bot:
+            hp_laptop_landing.png: true
+    index.update.yml: true
