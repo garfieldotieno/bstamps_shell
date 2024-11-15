@@ -20,7 +20,7 @@ from api_master.philate import secrets, generate_qrcode_image, generate_transact
 import telebot
 from api_master.BaseBotModule import yaml
 
-from api_master.models import Item, Transaction, Payment, Order, Task, Geo, UserSessionProfile, Card
+from api_master.models import Item, Transaction,  Order, Task, Geo, UserSessionProfile, Card
 from api_master.new_models import Location, Auth
 
 from api_master.db import base_bot_db, Session
