@@ -30,7 +30,7 @@ from . import BaseBotModule
 
 # from . import Mk40BotModule 
 
-from . import payments
+#from . import payments
 
 
 
