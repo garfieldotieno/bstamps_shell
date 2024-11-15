@@ -1,6 +1,6 @@
 import telebot
 from api_master import config, BluMarkup
-import api_master.payments as payments
+#import api_master.payments as payments
 import os
 import time 
 
