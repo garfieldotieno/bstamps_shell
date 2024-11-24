@@ -790,6 +790,6 @@ def process_client_input():
 if __name__ == '__main__':
     with app.app_context():
         # time.sleep(0.5)
-        tele_bot.set_webhook(url="https://e633-2c0f-2a80-10fa-a410-102b-f7d6-7101-1621.ngrok-free.app/telegram")
+        tele_bot.set_webhook(url="https://mutually-advanced-pegasus.ngrok-free.app/telegram")
 
     app.run(debug=True, port=PORT)
