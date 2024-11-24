@@ -6,6 +6,13 @@ redis_config = {
     'port':6379
 }
 
+hermes_config={}
+hermes_config['API_TOKEN'] = '7976895822:AAEUPexN5oSVvjV-mdRE0Z7yT2dA3r9A9Rw'
+hermes_config['WEBHOOK_HOST'] = 'mutually-advanced-pegasus.ngrok-free.app/'
+hermes_config['WEBHOOK_URL_BASE'] = "https://%s" % (hermes_config['WEBHOOK_HOST'])
+hermes_config['WEBHOOK_URL_PATH'] = f"{hermes_config['API_TOKEN']}/"
+
+
 
 blu_config={}
 blu_config['API_TOKEN'] = '6716887285:AAGS79w1cXeJd8h71aBOl1ppTrQKnGVTy24'

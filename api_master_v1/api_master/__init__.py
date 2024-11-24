@@ -28,6 +28,9 @@ from . import philate
 
 from . import BaseBotModule 
 
+from . import HermesModule 
+from . import HermesMarkup
+
 # from . import Mk40BotModule 
 
 #from . import payments

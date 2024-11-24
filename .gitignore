@@ -3,3 +3,5 @@ api_master_v1/venv/*
 api_master_v1/static/splide-3.1.2/*
 api_master_v1/__pycache__/*
 
+
+hermes_service/venv/*
