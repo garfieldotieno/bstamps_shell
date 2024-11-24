@@ -74,7 +74,7 @@ services:
   #     - ./api_puter:/app
     
   bredis:
-    image: redis/redis-stack:6.2.6-v2
+    image: redis/redis-stack
     environment:
       - REDIS_ARGS= --appendonly yes
     ports:
