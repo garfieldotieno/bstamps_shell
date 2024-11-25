@@ -785,7 +785,10 @@ def process_client_input():
 
         return 'ok'
     
-    
+
+@app.route('/test')
+def run_test():
+    return 'ok, testing '
     
 if __name__ == '__main__':
     with app.app_context():
