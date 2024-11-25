@@ -16,4 +16,7 @@ EXPOSE 1000
 # Define the command to run the Flask application
 # CMD ["python", "/app/app.py"]
 
-CMD ["gunicorn", "app:app"]
+# CMD ["gunicorn", "app:app"]
+
+
+CMD ["gunicorn", "--bind", "0.0.0.0:1000", "app:app"]
