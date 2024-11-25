@@ -792,4 +792,4 @@ if __name__ == '__main__':
         # time.sleep(0.5)
         tele_bot.set_webhook(url="https://mutually-advanced-pegasus.ngrok-free.app/telegram")
 
-    app.run(debug=True, port=PORT)
+    app.run(debug=True, port=1000)
