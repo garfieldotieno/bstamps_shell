@@ -18,6 +18,13 @@ window.addEventListener('DOMContentLoaded', function() {
       // For this example, we do nothing after preventing the default behavior
     });
   });
+
+
+  let botHeader = document.getElementById("botHeader");
+  
+
+  get_to_date_string(botHeader);
+  
   
 });
 
@@ -25,11 +32,9 @@ window.addEventListener('DOMContentLoaded', function() {
 // Function to set the initial zoom level on page load
 function setInitialZoom() {
   // console.log(`zooming`)
-  const initialZoom = 0.8; // 80%
+  const initialZoom = 0.7; // 80%
   document.documentElement.style.zoom = initialZoom;
 }
-
-
 
 
 function refreshDisplay(){
@@ -47,20 +52,32 @@ function getScreenMode(){
 
 // test function to print yup
 function render_ui(){
+
   var startX = 0;
   window.scrollTo(startX, 0);
 
+  handle_first_time_contact();
+  
   if(getScreenMode() == 'small'){
-    console.log('yup, small screen')
+    console.log('yup, small screen');
+    // check auth state in localStorage
+    // if auth : [checkin, shop, wallet], [scanner], [call,mail,about]
+    // else : [checkin], [scanner], [call,mail,about]
+    show_big_screen_context_btns();
   }
   else if (getScreenMode() == 'large'){
-    console.log('yup, large screen')
+    console.log('yup, large screen');
+    // check auth state in localStorage
+    // if auth : [checkin, shop, wallet], [refresh,scanner], [call, mail, about]
+    // else : [checkin], [scanner], [call,mail,about]
+    show_big_screen_context_btns();
   }
   
 }
 
 // bot components section
 function get_to_date_string(element_object){
+  console.log("calling get_to_date_string")
   let d = new Date();
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -69,19 +86,11 @@ function get_to_date_string(element_object){
 
 }
 
-let bot_header_big = document.getElementById("bot_header_big");
-get_to_date_string(bot_header_big)
-
-let bot_header_small = document.getElementById("bot_header_small");
-get_to_date_string(bot_header_small)
-
 // Get the bot_app element
 const botApp = document.querySelector('.bot_app');
 
 // Get the initial offset from the top
 const initialOffset = botApp.getBoundingClientRect().top;
-
-
 
 // Function to update the position of bot_app for large screens
 function updateBotAppPosition() {
@@ -102,369 +111,553 @@ window.addEventListener('scroll', updateBotAppPosition);
 // Call the function on page load to set the initial position
 updateBotAppPosition();
 
-function show_small_bot_home(){
-  // console.log('about to hide l_d_s and show bot_display_section_small')
-  document.querySelector(".large_display_section").style.display = "none";
-  document.querySelector(".bot_display_section_small").style.display = "block";
-}
-
-function upload_file(){
-  console.log(`${this}`)
-  let file_input_el = document.createElement('input');
-  file_input_el.setAttribute('type', 'file');
-  file_input_el.addEventListener('change', process_ticket_qr);
-  file_input_el.click();
-}
-
-let scan_res_var = ""
-
-function process_ticket_qr(event) {
-  uploadedFile = event.target.files[0];
-  // console.log(`uploaded file is : ${uploadedFile}`);
-  generate_prompt_mode();
-}
 
 
-async function generate_prompt_mode() {
-  console.log('prompt mode activated');
+// button functions
 
-  let bot_container = document.querySelector('.bot_display_section');
-  let bot_app = document.querySelector('.bot_app');
-  let bot_input_section = document.querySelector('.bot_input_section');
-  let button_stack = bot_app.children[3];
-  console.log('Printing button_stack:');
-  console.log(button_stack);
+function process_button_master(button) {
+  console.log('process button master');
+  const select_btn = button.id;
+  console.log(`selected button is ${select_btn}`);
 
-  button_stack.innerHTML = ''
-
-  // Create the input field for redeem code
-  let bot_input_redeem_code = document.createElement('input');
-  bot_input_redeem_code.classList.add('bot_input_redeem_code');
-  bot_input_redeem_code.type = 'text';
-  bot_input_redeem_code.placeholder = 'REDEEM CODE';
-  bot_input_redeem_code.name = 'redeem_code';
-
-  bot_input_redeem_code.addEventListener('input', function(event) {
-    const userInput = event.target.value;
-    // console.log('User Input:', userInput);
-    // Check if the .input-error class is present
-    if (bot_input_redeem_code.classList.contains('input-error')) {
-      bot_input_redeem_code.classList.remove('input-error');
-    }
-    // Additional actions based on the input value can be added here
-  });
-
-
-
-  bot_input_section.appendChild(bot_input_redeem_code);
-
-  let buttonTemplate = `
-    <div class="bot_button_layer">
-        <button class="bot_button" onclick="CLICK_EVENT">
-            <div class="row">
-                <div class="col-8">
-                    <span class="type-label">LABEL</span>
-                </div>
-                <div class="col-4">
-                    <span class="type_label">
-                        <i class="fa ICON_CLASS"></i>
-                    </span>
-                </div>
-            </div>
-        </button>
-    </div>
-`;
-
-
-// Create the submit button
-button_stack.innerHTML = button_stack.innerHTML + buttonTemplate.replace('CLICK_EVENT', 'process_submit()').replace('LABEL', 'Submit').replace('ICON_CLASS', 'fa-arrow-right');
-
-
-
-// Create the cancel button
-button_stack.innerHTML = button_stack.innerHTML + buttonTemplate.replace('CLICK_EVENT', 'process_cancel()').replace('LABEL', 'Cancel').replace('ICON_CLASS', 'fa-times');
-
-
-
-}
-
-function process_cancel() {
-  console.log("called cancel event");
-  sessionStorage.clear()
-  let baseEndpoint = window.location.origin; // Assuming the base endpoint is the same as the current origin
-  let specificEndpoint = '/'; // Replace with the specific path where you want to redirect
-  let params = new URLSearchParams({ intent: 'Cancel' }).toString();
-  let finalURL = `${baseEndpoint}${specificEndpoint}?${params}`;
-  window.location.href = finalURL;
-}
-
-function process_reset_session() {
-  console.log("called reset session event");
-  sessionStorage.clear()
-  window.location.href = "/logout";
-}
-
-function process_login(){
-  console.log("calling process login")
-  sessionStorage.clear()
-  let baseEndpoint = window.location.origin; // Assuming the base endpoint is the same as the current origin
-  let specificEndpoint = '/login'; // Replace with the specific path where you want to redirect
-  let params = new URLSearchParams({ swap: 'Y' }).toString();
-  let finalURL = `${baseEndpoint}${specificEndpoint}?${params}`;
-  window.location.href = finalURL;
+  // Use a switch statement to handle button-specific logic
+  switch (select_btn) {
+    case "check_in":
+      process_checkin();
+      break;
+    case "shop":
+      process_shop();
+      break;
+    case "wallet":
+      process_wallet();
+      break;
+    case "refresh":
+      process_refresh();
+      break;
+    case "camera":
+      process_camera();
+      break;
+    case "call":
+      process_call();
+      break;
+    case "mail":
+      process_mail();
+      break;
+    case "about":
+      process_about();
+      break;
+    case "base_cancel":
+      process_base_cancel();
+      break;
+    case "second_cancel":
+      process_second_cancel();
+      break;
+    case "redeem":
+      process_checkin_redeem();
+      break;
+    case "purchase":
+      process_checkin_purchase();
+      break;
+    default:
+      console.log(`No handler for button ID: ${select_btn}`);
+  }
 }
 
 
 
-function process_submit(){
-  console.log("called function submit")
-  // Capture the input value before form submission
-  let bot_input_redeem_code = document.querySelector('.bot_input_redeem_code')
-  const userInputValue = bot_input_redeem_code.value;
+function process_base_cancel(){
+  console.log('processing base_cancel');
+  // hide info div
+  const botInfoDisplay = document.getElementById('botInfoDisplay');
+  if (botInfoDisplay){
+    botInfoDisplay.innerHTML='';
+    botInfoDisplay.style.display = "none";
 
-  // Perform the form submission and attach the uploaded file
-  const formData = new FormData();
-  formData.append('file', uploadedFile);
-  formData.append('userInput', userInputValue);
+  }
+  // hide nav giv
+  const botNavigation = document.getElementById("botNavigation");
+  if (botNavigation){
+    botNavigation.innerHTML='';
+    botNavigation.style.display = "none"
+  }
 
-  const baseEndpoint = window.location.origin; // Assuming the base endpoint is the same as the current origin
-  const specificEndpoint = '/recognize_artifact'; // Adjust this to match your specific endpoint path
-  const endpointURL = `${baseEndpoint}${specificEndpoint}`;
+  // restore start view
+  const botButtonStackBig = document.getElementById("botButtonStackBig");
+  botButtonStackBig.style.display = "block";
 
-  fetch(endpointURL, {
-      method: 'POST',
-      body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-      
+  const botButtonStackMiddle = document.getElementById("botButtonStackMiddle");
+  botButtonStackMiddle.style.display = "block";
 
-      if (data.status != true) {
-          // Trigger the animation for the specific error message
-          let bot_input_redeem_code = document.querySelector('.bot_input_redeem_code');
-          if (bot_input_redeem_code.classList.contains('input-error')) {
-              bot_input_redeem_code.classList.remove('input-error');
-          }
-          bot_input_redeem_code.classList.add('input-error');
-      }else
-      {
-        console.log('operation successfull')
-        if (data.card_operation && data.card_operation.trim().toLowerCase() === "auth_reset_card") {
-          // Handle response data
-          console.log(`Received data:`, data);
-          sessionStorage.setItem('authCode', data.auth_card_gen.new_code);
-          sessionStorage.setItem('download_url', data.auth_card_gen.url);
-      
-          // Clear the bot input section
-          let bot_app = document.querySelector('.bot_app');
-          let bot_input_section = document.querySelector('.bot_input_section');
-          let button_stack = bot_app.children[3];
-      
-          let codeMessage = `Your Authentication Card has been generated. <br> Your Code for this card is <strong>${data.auth_card_gen.new_code}</strong>.`;
-      
-          bot_input_section.innerHTML = codeMessage;
-      
-          let buttonTemplate = `
-              <div class="bot_button_layer">
-                  <button class="bot_button" onclick="CLICK_EVENT">
-                      <div class="row">
-                          <div class="col-8">
-                              <span class="type-label">LABEL</span>
-                          </div>
-                          <div class="col-4">
-                              <span class="type_label">
-                                  <i class="fa ICON_CLASS"></i>
-                              </span>
-                          </div>
-                      </div>
-                  </button>
-              </div>
-          `;
-      
-          button_stack.innerHTML = '';
-      
-          // Create the Copy button
-          button_stack.innerHTML += buttonTemplate.replace('CLICK_EVENT', 'process_copy()').replace('LABEL', 'Copy').replace('ICON_CLASS', 'fa-clone');
-      
-          
-      }
-      
-        else if (data.card_operation && data.card_operation.trim().toLowerCase() === "auth_card") {
-          
-          // Handle response data
-          console.log(`Received data:`, data);
-          // sessionStorage.setItem('authCode', data.auth_card_gen.new_code);
-          // sessionStorage.setItem('download_url', data.url)
-          
-          
-          
-          let bot_app = document.querySelector('.bot_app');
-          let bot_input_section = document.querySelector('.bot_input_section');
-          let button_stack = bot_app.children[3];
-      
-          
-      
-          bot_input_section.innerHTML = '';
-          bot_input_section.innerHTML = "You're ready to login, continue with the buttons below";
+  const botButtonStackContact = document.getElementById("botButtonStackContact");
+  botButtonStackContact.style.display = "block";
 
-          let buttonTemplate = `
-              <div class="bot_button_layer">
-                  <button class="bot_button" onclick="CLICK_EVENT">
-                      <div class="row">
-                          <div class="col-8">
-                              <span class="type-label">LABEL</span>
-                          </div>
-                          <div class="col-4">
-                              <span class="type_label">
-                                  <i class="fa ICON_CLASS"></i>
-                              </span>
-                          </div>
-                      </div>
-                  </button>
-              </div>
-          `;
-      
-          button_stack.innerHTML = '';
+}
 
-          button_stack.innerHTML += buttonTemplate.replace('CLICK_EVENT', 'process_login()').replace('LABEL', 'Login').replace('ICON_CLASS', 'fa-sign-in');
-      
-          // Create the cancel button
-          button_stack.innerHTML += buttonTemplate.replace('CLICK_EVENT', 'process_reset_session()').replace('LABEL', 'Cancel').replace('ICON_CLASS', 'fa-times');
-        }
-      
+function process_second_cancel(){
+  console.log('process second_cancel');
 
-      }
-      // Add your further handling logic for a successful response here
+  const botInfoDisplay = document.getElementById('botInfoDisplay');
+  if (botInfoDisplay){
+    botInfoDisplay.innerHTML='';
+    botInfoDisplay.style.display = "none";
 
-      
+  }
+
+  // hide nav giv
+  const botNavigation = document.getElementById("botNavigation");
+  if (botNavigation){
+    botNavigation.innerHTML='';
+    botNavigation.style.display = "none"
+  }
+
+  // restore start view
+  const botButtonStackBig = document.getElementById("botButtonStackBig");
+  botButtonStackBig.style.display = "block";
+
+  const botButtonStackMiddle = document.getElementById("botButtonStackMiddle");
+  botButtonStackMiddle.style.display = "block";
+
+  const botButtonStackContact = document.getElementById("botButtonStackContact");
+  botButtonStackContact.style.display = "block";
+  
+}
+
+function process_checkin(){
+  console.log('process checkin');
+  fold_bot_start_display();
+  show_checkin_info();
+  show_checkin_base_navigation();
+}
+
+function process_shop(){
+  console.log('process shop');
+  fold_bot_start_display();
+  show_shop_info();
+  show_shop_base_navigation();
+}
+
+function process_wallet(){
+  console.log('process wallet');
+  fold_bot_start_display();
+  show_wallet_info();
+  show_wallet_base_navigation();
+}
+
+
+function process_camera(){
+  console.log('process camera');
+  fold_bot_start_display();
+  show_scanner_info();
+  show_scanner_base_navigation();
+}
+
+function process_about(){
+  console.log('process about');
+  fold_bot_start_display();
+  show_about_info();
+  show_about_base_navigation();
+}
+
+
+function process_refresh(){
+  console.log('process refresh')
+}
+
+
+function process_call(){
+  console.log('process call');
+  // prompt call from device
+  // Assuming you want to initiate a phone call, you can use the `tel:` protocol to prompt a call on mobile devices
+  const phoneNumber = "254703103960"; // Example phone number, replace with dynamic data if needed
+  window.location.href = `tel:${phoneNumber}`; // This will prompt the device to make a call to the provided number
+}
+
+function process_mail(){
+  console.log('process mail');
+  // prompt mail from device
+  const subject = "Reach from Customer";
+  const body = "Body content goes here";
+  const recipient = "otienot75@gmail.com"; // Fixed recipient email address
+
+  // Use the mailto protocol to open the default email client with the recipient, subject, and body
+  window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  // This will open the default email client with the provided subject, body, and recipient email address pre-filled.
+}
+
+// checkin redeem
+
+function process_checkin_redeem(){
+  console.log('process checkin redeem option')
+
+  fold_bot_start_display();
+  const botInfoDisplay = document.getElementById('botInfoDisplay');
+  if (botInfoDisplay){
+    botInfoDisplay.innerHTML='';
     
+  }
+  // hide nav giv
+  const botNavigation = document.getElementById("botNavigation");
+  if (botNavigation){
+    botNavigation.innerHTML='';
+    
+  }
+  show_checkin_reddem_info();
+  show_checkin_redeem_navigation();
+}
 
-  })
-  .catch(error => {
-      console.error(error)
-      let bot_input_redeem_code = document.querySelector('.bot_input_redeem_code');
-      bot_input_redeem_code.classList.add('input-error');
-  });
+
+function process_checkin_purchase(){
+  console.log('process checkin purchase option')
+
+  fold_bot_start_display();
+  const botInfoDisplay = document.getElementById('botInfoDisplay');
+  if (botInfoDisplay){
+    botInfoDisplay.innerHTML='';
+    
+  }
+  // hide nav giv
+  const botNavigation = document.getElementById("botNavigation");
+  if (botNavigation){
+    botNavigation.innerHTML='';
+    
+  }
+
+  show_checkin_purchase_info();
+  show_checkin_purchase_navigation();
+
 }
 
 
 
-
-
-function process_copy() {
-  console.log('processing copy');
-  // Access the stored value from session storage
-  const codeToCopy = sessionStorage.getItem('authCode');
-
-  let bot_app = document.querySelector('.bot_app');
-  let button_stack = bot_app.children[3];
-
-  let copy_clicked = sessionStorage.getItem('copy_clicked');
-
-  let buttonTemplate = `
-            <div class="bot_button_layer">
-                <button class="bot_button" onclick="CLICK_EVENT">
-                    <div class="row">
-                        <div class="col-8">
-                            <span class="type-label">LABEL</span>
-                        </div>
-                        <div class="col-4">
-                            <span class="type_label">
-                                <i class="fa ICON_CLASS"></i>
-                            </span>
-                        </div>
-                    </div>
-                </button>
-            </div>
-        `;
-
-  if (!copy_clicked && codeToCopy) {
-      // Create a temporary input element
-      const tempInput = document.createElement('input');
-      tempInput.value = codeToCopy;
-      document.body.appendChild(tempInput);
-
-      // Select the text
-      tempInput.select();
-      tempInput.setSelectionRange(0, 99999); // For mobile devices
-
-      // Copy the text
-      document.execCommand('copy');
-
-      // Remove the temporary input
-      document.body.removeChild(tempInput);
-
-      console.log(`Copied the code: ${codeToCopy}`);
-
-      sessionStorage.setItem('copy_clicked', 'true');
-      button_stack.innerHTML += buttonTemplate.replace('CLICK_EVENT', 'process_download()').replace('LABEL', 'Download').replace('ICON_CLASS', 'fa-download');
-  } else if (!copy_clicked) {
-      console.error('Data is not available or does not have the required structure.');
+// minima stuff
+MDS.init(function(msg) {
+  switch (msg.event) {
+      case "inited":
+          MDS.log("MDS has been initialised.");
+          break;
+      case "NEWBALANCE":
+          MDS.log("New balance: " + JSON.stringify(msg.data));
+          break;
+      case "NEWBLOCK":
+          MDS.log("New block: " + JSON.stringify(msg.data));
+          break;
+      case "MINING":
+          MDS.log("Mining status: " + JSON.stringify(msg.data));
+          break;
+      case "MINIMALOG":
+          MDS.log("Log message: " + JSON.stringify(msg.data));
+          break;
+      case "MAXIMA":
+          MDS.log("Maxima message: " + JSON.stringify(msg.data));
+          break;
+      case "MDS_TIMER_1HOUR":
+          MDS.log("One-hour timer event.");
+          break;
+      case "MDS_TIMER_10SECONDS":
+          MDS.log("10-second timer event.");
+          MDS.notify("This is a notification message.");
+          MDS.notifycancel();
+          break;
+      case "MDS_SHUTDOWN":
+          MDS.log("System shutdown message received.");
+          break;
   }
+});
+
+
+function generate_first_auth_unique_id() {
+  console.log('calling generate_first_auth_unique_id');
+  const sessionObj = {
+      is_active: false,
+      id: generateUniqueId(),
+      created_at: Date.now().toString(),
+      updated_at: Date.now().toString(),
+      ttl: '',
+      user_type: 'first'
+  };
+  persist(sessionObj.id, sessionObj);
+  return JSON.stringify(sessionObj);
 }
 
-// Function for handling the download process
-function process_download() {
-  console.log('processing download');
+function generate_customer_auth_unique_id() {
+  console.log('calling generate_customer_auth_unique_id');
+  const sessionObj = {
+      is_active: false,
+      id: generateUniqueId(),
+      created_at: Date.now().toString(),
+      updated_at: Date.now().toString(),
+      ttl: '',
+      user_type: 'customer'
+  };
+  persist(sessionObj.id, sessionObj);
+  return JSON.stringify(sessionObj);
+}
 
-  let bot_app = document.querySelector('.bot_app');
-  let button_stack = bot_app.children[3];
-  let bot_input_section = document.querySelector('.bot_input_section');
-  bot_input_section.innerHTML = "You're ready to login, continue with the buttons below";
+function generate_vendor_auth_unique_id() {
+  console.log('calling generate_vendor_auth_unique_id');
+  const sessionObj = {
+      is_active: false,
+      id: generateUniqueId(),
+      created_at: Date.now().toString(),
+      updated_at: Date.now().toString(),
+      ttl: '',
+      user_type: 'vendor'
+  };
+  persist(sessionObj.id, sessionObj);
+  return JSON.stringify(sessionObj);
+}
 
-  let download_clicked = sessionStorage.getItem('download_clicked');
 
-  if (!download_clicked) {
-      
-      let buttonTemplate = `
-          <div class="bot_button_layer">
-              <button class="bot_button" onclick="CLICK_EVENT">
-                  <div class="row">
-                      <div class="col-8">
-                          <span class="type-label">LABEL</span>
-                      </div>
-                      <div class="col-4">
-                          <span class="type_label">
-                              <i class="fa ICON_CLASS"></i>
-                          </span>
-                      </div>
-                  </div>
-              </button>
-          </div>
-      `;
+function add_session_ttl(user_type) {
+  console.log('calling add_session_ttl');
+  let ttlHours;
 
-      // Create the Login button
-      button_stack.innerHTML += buttonTemplate.replace('CLICK_EVENT', 'process_login()').replace('LABEL', 'Login').replace('ICON_CLASS', 'fa-sign-in');
-
-      // Create the Cancel button
-      button_stack.innerHTML += buttonTemplate.replace('CLICK_EVENT', 'process_reset_session()').replace('LABEL', 'Cancel').replace('ICON_CLASS', 'fa-times');
-
-      sessionStorage.setItem('download_clicked', 'true');
+  switch (user_type) {
+      case 'first':
+          ttlHours = 1; // 1 hour
+          break;
+      case 'customer':
+          ttlHours = 48; // 48 hours
+          break;
+      case 'vendor':
+          ttlHours = 72; // 72 hours
+          break;
+      default:
+          console.error('Invalid user type');
+          return 0;
   }
 
-  let downloadURL = sessionStorage.getItem('download_url');
-  // Check if the download URL exists
-  if (downloadURL) {
-      // Extract the URL path from the data
-      const urlPath = downloadURL.split('/static')[1];
-      // Create the complete download URL
-      const completeDownloadURL = window.location.origin + '/static' + urlPath;
-      // Create a new anchor element
-      const link = document.createElement('a');
-      link.href = completeDownloadURL;
-      link.download = 'file_name'; // Set the desired file name here
-      // Simulate click on the link to trigger the download
-      link.click();
-      // Remove the link from the DOM
-      link.remove();
-  } else {
-      console.error('Download URL not found.');
-  }
+  return ttlHours * 60 * 60 * 1000; // Convert hours to milliseconds
 }
 
 
 
+function persist(key, sessionObj) {
+  console.log('calling persist');
+  try {
+      localStorage.setItem(key, JSON.stringify(sessionObj));
+      console.log(`Session saved for key: ${key}`);
+  } catch (error) {
+      console.error('Error saving session to localStorage', error);
+  }
+}
 
 
+function determine_user_session_ttl(userId) {
+  console.log('calling determine_user_session_ttl');
+  const sessionData = localStorage.getItem(userId);
+
+  if (!sessionData) {
+      console.error('Session not found');
+      return -1;
+  }
+
+  const sessionObj = JSON.parse(sessionData);
+  const currentTime = Date.now();
+  const sessionExpiry = parseInt(sessionObj.created_at) + parseInt(sessionObj.ttl);
+
+  if (currentTime >= sessionExpiry) {
+      console.log('Session has expired');
+      return 0;
+  }
+
+  const remainingTtl = sessionExpiry - currentTime;
+  console.log(`Remaining TTL for session ${userId}: ${remainingTtl} ms`);
+  return remainingTtl;
+}
+
+
+function generateUniqueId() {
+  return [...Array(32)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+}
+
+
+function handle_first_time_contact() {
+  console.log('Handling first-time contact');
+
+  // Iterate through all keys in localStorage to find session data
+  const sessionKeys = Object.keys(localStorage);
+  let activeSession = null;
+
+  for (const key of sessionKeys) {
+      const sessionData = localStorage.getItem(key);
+      if (sessionData) {
+          const sessionObj = JSON.parse(sessionData);
+
+          // Check if session has `user_type` attribute to validate it's a session object
+          if (sessionObj.user_type) {
+              const ttlStatus = determine_user_session_ttl(sessionObj.id);
+
+              if (ttlStatus > 0) {
+                  console.log('Active session found:', sessionObj);
+                  activeSession = sessionObj;
+                  break;
+              } else {
+                  console.log('Session expired. Clearing session:', sessionObj.id);
+                  localStorage.removeItem(sessionObj.id);
+              }
+          }
+      }
+  }
+
+  if (!activeSession) {
+      console.log('No active session found or session expired. Regenerating first session.');
+      const newSession = JSON.parse(generate_first_auth_unique_id());
+      newSession.ttl = add_session_ttl(newSession.user_type);
+      persist(newSession.id, newSession);
+
+      console.log('New session created:', newSession);
+      return newSession;
+  }
+
+  console.log('Using existing active session:', activeSession);
+  return activeSession;
+}
+
+function createSession(userType, isActive, ttlOffsetInHours) {
+  const now = Date.now();
+  const session = {
+      is_active: isActive,
+      id: `${userType}_${Math.random().toString(36).substr(2, 16)}`,
+      user_type: userType,
+      created_at: now.toString(),
+      updated_at: now.toString(),
+      ttl: (now + ttlOffsetInHours * 60 * 60 * 1000).toString()
+  };
+  localStorage.setItem('user_session', JSON.stringify(session));
+  console.log(`Session created: ${JSON.stringify(session, null, 2)}`);
+} 
+
+function is_active() {
+  console.log('calling is_active');
+
+  // Check if there is any active session in localStorage
+  const sessionKeys = Object.keys(localStorage);
+
+  for (const key of sessionKeys) {
+      const sessionData = localStorage.getItem(key);
+      if (sessionData) {
+          const sessionObj = JSON.parse(sessionData);
+
+          if (sessionObj.is_active) {
+              console.log(`Active session found: ${key}`);
+              return true;
+          }
+      }
+  }
+
+  console.log('No active session found.');
+  return false;
+}
+
+function is_first() {
+  console.log('calling is_first');
+
+  // Iterate through sessions to check if there's a "first" session
+  const sessionKeys = Object.keys(localStorage);
+
+  for (const key of sessionKeys) {
+      const sessionData = localStorage.getItem(key);
+      if (sessionData) {
+          const sessionObj = JSON.parse(sessionData);
+
+          if (sessionObj.user_type === 'first') {
+              console.log(`'First' session found: ${key}`);
+              return true;
+          }
+      }
+  }
+
+  console.log('No session with user_type "first" found.');
+  return false;
+}
+
+function is_customer() {
+  console.log('calling is_customer');
+
+  // Iterate through sessions to check if there's a "customer" session
+  const sessionKeys = Object.keys(localStorage);
+
+  for (const key of sessionKeys) {
+      const sessionData = localStorage.getItem(key);
+      if (sessionData) {
+          const sessionObj = JSON.parse(sessionData);
+
+          if (sessionObj.user_type === 'customer') {
+              console.log(`'Customer' session found: ${key}`);
+              return true;
+          }
+      }
+  }
+
+  console.log('No session with user_type "customer" found.');
+  return false;
+}
+
+function is_vendor() {
+  console.log('calling is_vendor');
+
+  // Iterate through sessions to check if there's a "vendor" session
+  const sessionKeys = Object.keys(localStorage);
+
+  for (const key of sessionKeys) {
+      const sessionData = localStorage.getItem(key);
+      if (sessionData) {
+          const sessionObj = JSON.parse(sessionData);
+
+          if (sessionObj.user_type === 'vendor') {
+              console.log(`'Vendor' session found: ${key}`);
+              return true;
+          }
+      }
+  }
+
+  console.log('No session with user_type "vendor" found.');
+  return false;
+}
+
+
+
+function process_render() {
+  console.log('calling process_render');
+
+  if (is_active()){
+    console.log('active user\n\n');
+
+    if (is_first()){
+      console.log('is first user');
+      show_first_active();
+    }
+
+    if(is_customer()){
+      console.log('is customer user');
+      show_customer_active();
+    }
+
+    if(is_vendor()){
+      console.log('is vendor user');
+      show_vendor_active();
+    }
+  }
+  else{
+    console.log('inactive user\n\n')
+
+    if (is_first()){
+      console.log('is first user');
+      show_first_inactive();
+
+    }
+
+    if(is_customer()){
+      console.log('is customer user ')
+      show_customer_inactive();
+    }
+
+    if(is_vendor()){
+      console.log('is vendor user')
+      show_current_inactive();
+    }
+  }
+}
 
 

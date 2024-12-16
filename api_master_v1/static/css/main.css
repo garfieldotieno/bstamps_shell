@@ -1,14 +1,10 @@
 /* general : body, headers, font-size */
 .body {
   font-size: 16px;
-  padding-bottom: 1rem;
+  padding-bottom:1rem;
   font-family: "Roboto", "Open Sans", sans-serif;
-  background-color: #E85C5F;
+  background-color: #F27A3B;
 }
-
-
-
-
 
 /* Define the font sizes for the various heading elements */
 h1 {
@@ -60,7 +56,8 @@ p {
 /* static */
 .parent_display_container{
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 40% 60%;
+  padding-top: 10px;
 }
 
 .parent_display_container_prompt{
@@ -70,14 +67,6 @@ p {
     align-items: center;
 }
 
-@media screen and (max-width: 777px) {
-  .parent_display_container {
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: center;
-    align-items: center;
-  }
-}
 
 /* dynamic big */
 .large_display_section {
@@ -87,7 +76,7 @@ p {
 }
 
 .bot_display_section{
-  padding: 2rem;
+  padding-left: 24rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,17 +92,53 @@ p {
   display: none;
 }
 
+/* @media center */
+@media screen and (max-width: 777px) {
+  .parent_display_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
 
 @media (max-width: 777px) {
-  .bot_display_section_big{
+  .bot_display_section{
+    padding-left:2rem
+  }
+
+  .large_display_section{
     display: none;
   }
-  /* reserve following for js */
-  /* .bot_display_section_small{
-    display: block;
-  } */ 
 
 }
+
+@media screen and (max-width: 777px) {
+  .bg-invisble{
+    display: block;
+  }
+
+  .sm-invisble{
+    display: none;
+  }
+  
+}
+
+
+@media (max-width: 777px) {
+  .top_back_btn_hidden {
+    display: block;
+  }
+}
+
+@media (max-width: 777px) {
+  .item_card {
+    width: 350px;
+  }
+}
+
+
+
 
 /* dynamic small */
 .small_display_section{
@@ -127,7 +152,7 @@ p {
 
 
 .bot_app{
-  background-color: #FF6568;
+  background-color: #EC5D0F;
   box-shadow: 8px 8px 12px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   width: 360px;
@@ -226,20 +251,11 @@ p {
   display: none;
 }
 
-@media screen and (max-width: 777px) {
-  .bg-invisble{
-    display: block;
-  }
 
-  .sm-invisble{
-    display: none;
-  }
-  
-}
 
 
 .bot_button{
-  background-color: #FFFFFC;
+  background-color: #F3B87F;
   display: block;
   border-style: none;
   width: 100%;
@@ -275,6 +291,14 @@ p {
   font-size: 1.5rem;
 }
 
+
+#botInfoDisplay {
+  display: none;
+}
+
+#botNavigation {
+  display: none;
+}
 
 @keyframes glow-background {
   0% {
@@ -340,11 +364,6 @@ p {
   width: 90%;
 }
 
-@media (max-width: 777px) {
-  .top_back_btn_hidden {
-    display: block;
-  }
-}
 
 /* empty item listing bot container */
   .empty_listing_container {
@@ -439,7 +458,7 @@ p {
 .item_card {
   display: flex;
   flex-direction: column;
-  background-color: #FF6568;
+  background-color: #EC5D0F;
   box-shadow: 8px 8px 12px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   padding: 1rem;
@@ -447,11 +466,7 @@ p {
   width: 500px;
 }
 
-@media (max-width: 777px) {
-  .item_card {
-    width: 350px;
-  }
-}
+
 
 
 .item_card_image{
@@ -515,7 +530,7 @@ p {
 .item_get_button {
   border: none;
   border-radius: 15px;
-  background-color: #FFFFFC;
+  background-color: #F3B87F;
   height: 75%;
   margin: 1rem;
   width: 100%;

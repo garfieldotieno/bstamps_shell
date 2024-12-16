@@ -2,7 +2,7 @@ import os
 
 
 redis_config = {
-    'mode':'PRODUCTION',
+    'mode':'DEVELOPMENT',
     'port':6379
 }
 

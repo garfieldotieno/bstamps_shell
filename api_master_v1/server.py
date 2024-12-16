@@ -770,7 +770,7 @@ def index():
         bot_view_data = redis_session2.dict()['response_json']
         resource_data = Item.get_all()
         print(f"fetched bot_view_data button_stack_1 => \n {bot_view_data['current_bot_buttons'][0]} \n\n button_stack_2 {bot_view_data['current_bot_buttons'][1]} \n\n")
-        response = make_response(render_template('web_bot.html', session_data=redis_session2.dict(), resource_data=resource_data, bot_view=bot_view_data))
+        response = make_response(render_template('index.html', session_data=redis_session2.dict(), resource_data=resource_data, bot_view=bot_view_data))
         
         session_duration = time.time() + 3600
         response.set_cookie('user_data', session_uid, httponly=True, expires=session_duration)
@@ -809,7 +809,7 @@ def index():
                 if redis_session.session_type == "Regular":
                     bot_view_data = redis_session.dict()['response_json']
                     resource_data = Item.get_all()
-                    response = make_response(render_template('web_bot.html', session_data=redis_session.dict(), resource_data=resource_data, bot_view=bot_view_data))
+                    response = make_response(render_template('index.html', session_data=redis_session.dict(), resource_data=resource_data, bot_view=bot_view_data))
                     return response
                         
                     
