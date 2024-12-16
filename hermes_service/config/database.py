@@ -34,8 +34,15 @@ DATABASES = {
 }
 
 
+# hermes_bot_db = redis.Redis(
+#     host='bstamps_shell-bredis-1',  # Redis server host
+#     port=6379,         # Redis server port
+#     db=3,              # Database number (default is 0)
+#     decode_responses=True  # Automatically decode responses to strings
+# )
+
 hermes_bot_db = redis.Redis(
-    host='bstamps_shell-bredis-1',  # Redis server host
+    host='localhost',  # Redis server host
     port=6379,         # Redis server port
     db=3,              # Database number (default is 0)
     decode_responses=True  # Automatically decode responses to strings

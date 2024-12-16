@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from sqlalchemy import create_engine, Column, String, Float, Integer, Text, Boolean
+from sqlalchemy import create_engine, Column, String, Float, Integer, Text, Boolean, Date, Time
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import uuid
@@ -80,6 +80,8 @@ class Location(Base):
         return f"id : {self.id}, description : {self.location_description}"
 
 
+
+
 class Delivery(Base):
     __tablename__ = "delivery"
     
@@ -92,8 +94,8 @@ class Delivery(Base):
     delivery_total_amount = Column(Float, nullable=False)
     
     delivery_type = Column(String, nullable=False)
-    delivery_date = Column()
-    delivery_time = Column()
+    delivery_date = Column(Date, nullable=False)
+    delivery_time = Column(Time, nullable=False)
     delivery_description = Column(String, nullable=False)
 
     delivery_location_uid = Column(String, nullable=False)
@@ -152,7 +154,6 @@ class Payment(Base):
 
 
 class PaymentTransaction(Base):
-
     __tablename__ = "payment_transactions"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -205,18 +206,23 @@ class SlotQuestion(Base):
 
     @staticmethod
     def get_question_pack(db, slot_code):
+        print(f"\n\nAttempting get_question_pack\n\n")
+
         slot_question = db.query(SlotQuestion).filter(SlotQuestion.slot_code == slot_code).first()
         if slot_question:
-            print(f"fetched slot_question is {slot_question.question_payload}")
+            print(f"\n\nfetched slot_question is {slot_question.question_payload}\n\n")
             res = json.loads(slot_question.question_payload)
             res = list(res.keys())
-            print(f"res for get_question_pack is : {res}")
+            print(f"\n\nres for get_question_pack is : {res}\n\n")
             return res
         
         return None
 
+
     @staticmethod
     def get_slot_questions(db,slot_code):
+        print(f"\n\n calling get_slot_questions \n\n")
+        
         slot_question = db.query(SlotQuestion).filter(SlotQuestion.slot_code == slot_code).first()
         if slot_question:
             print(f"fetched slot_question is : {slot_question.question_payload}")
@@ -242,16 +248,18 @@ def load_slotquizes(db):
             "slot_code": "R_S_H",
             "slot_description" : "Redeem a free session and get 24-hr access to the platform",
             "question_payload" : {
-                0 : "Enter the latest redeem code to proceed",
-                1 : "Confirm code by repeating it"
+                0 : "Select your preferred session type ",
+                1 : "Enter your redeem code to proceed",
+                2 : "Confirm code by repeating it"
             }
         },
         {
             "slot_code" : "P_S_H",
             "slot_description" : "Enter M-pesa payment information for generated session invoice",
             "question_payload" : {
-                0 : "Enter M-pesa message for processing",
-                1 : "Confirm M-pesa message by repeating it"
+                0 : "Select your preffered session type ",
+                1 : "Enter M-pesa message for processing\nYou can edit and cut out your balance.",
+                2 : "Confirm M-pesa message by repeating it\nYou can edt and cut out your balance"
             }
         },
         {
@@ -282,11 +290,12 @@ def load_slotquizes(db):
                 7 : "Upload item order plate image",
                 8 : "Upload item receipt plate image",
                 9 : "Upload item instacard big plate image",
-                10 : "Upload item instacard small plate image"
+                10: "Upload item instacard small plate image"
             }
         }
 
     ]
+    
     for data in slot_data:
         SlotQuestion.add_slot_question(
             db,
@@ -294,6 +303,7 @@ def load_slotquizes(db):
             slot_description=data['slot_description'],
             question_payload=data['question_payload']
         )
+
     print("Slot quizzes loaded successfully")
 
 

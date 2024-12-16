@@ -43,7 +43,7 @@ def process_mpesa_string(mpesa_string):
         # Received message pattern
         phone_match = re.search(r'\d{10}', mpesa_string)
         if not phone_match:
-            return "wrong sent/payment message input"
+            return "wrong recieved/payment message input"
         phone = phone_match.group()
         
         code = re.search(r'^\w*', mpesa_string).group()
@@ -103,6 +103,7 @@ def master_mpesa_hermes_log(mpesa_string):
     else:
         set_hermes_master_unprocessed_mpesa_payments(res[1])
         return 1
+
 
 def set_hermes_master_unprocessed_mpesa_payments(code):
     return hermes_bot_db.sadd("payments:master:unprocessed_payments", code)

@@ -241,6 +241,7 @@ def tele_webhook():
 
                 # Print or process the extracted data
             print(f"User ID: {user_id}, Username: {user_name}, Client Input: {client_input}")
+            
             db = SessionLocal()
 
             if Session.is_first_time_contact(user_id):
@@ -487,7 +488,7 @@ def tele_webhook():
                                          
 
                                      
-                                elif sub_menu == "abt_submenu_listing":
+                                elif sub_menu == "abt_submeinu_listing":
 
                                     return 'ok'
                                 
@@ -498,6 +499,7 @@ def tele_webhook():
                             return_message = "please use the buttons below to proceed" 
                             tele_bot.send_message(user_id, return_message)
                             return 'ok'
+                    
                     
                     if Session.is_slot_filling(user_id):
                         print(f"yup user is slot_filling")
