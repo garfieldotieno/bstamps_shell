@@ -1830,6 +1830,13 @@ def delete_location(uid):
 
 
 
+# twitter maneno
+@platform_api.route('/twitter/callback', methods=['GET', 'POST'])
+def callback_twitter():
+    base_bot_db.incrby('twitter_hits',1)
+    return 'ok'
+
+
 
 
 # Ensure the session is closed
