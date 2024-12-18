@@ -94,6 +94,17 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./:/workdir:ro
     restart: unless-stopped
+  
+  minima-node:
+    image: minimaglobal/minima
+    environment:
+        - minima_mdspassword=inserpasswordhere
+        - minima_desktop=true
+    volumes:
+        - minima_volume:/home/minima/data
+    ports:
+        - "9001-9003:9001-9003"
+    restart: unless-stopped
 
 volumes:
   nginx_conf:
@@ -103,4 +114,6 @@ volumes:
   certbot_acme_challenge:
     external: true
   redis_data:
+    external: true
+  minima_volume:
     external: true
