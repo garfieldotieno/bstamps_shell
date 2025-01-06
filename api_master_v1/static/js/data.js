@@ -7,11 +7,67 @@ const sessionData = {
     }
 };
 
+// const resourceData = [
+//     { id: 1, public: true, item_media_url: 'landing_images/sample3.jpg', title: 'Item 1', price: 100, name: 'Item One', description: 'Description of Item One' },
+//     { id: 2, public: true, item_media_url: 'landing_images/sample4.jpg', title: 'Item 2', price: 200, name: 'Item Two', description: 'Description of Item Two' },
+//     { id: 3, public: true, item_media_url: 'landing_images/doom.jpeg', title: 'Item 3', price: 200, name: 'Item Three', description: 'Description of Item Three' }
+// ];
+
 const resourceData = [
-    { id: 1, public: true, item_media_url: 'landing_images/sample3.jpg', title: 'Item 1', price: 100, name: 'Item One', description: 'Description of Item One' },
-    { id: 2, public: true, item_media_url: 'landing_images/sample4.jpg', title: 'Item 2', price: 200, name: 'Item Two', description: 'Description of Item Two' },
-    { id: 3, public: true, item_media_url: 'landing_images/doom.jpeg', title: 'Item 3', price: 200, name: 'Item Three', description: 'Description of Item Three' }
+    { id: 1, public:true, item_media_url: 'landing_images/subscription_box.jpg', title: 'Subscription Box', price: 100, name: 'Electronics Box', description: 'Subscribe today and get the latest information and offers for your electronic products' },
+    { id: 2, public:true, item_media_url: 'landing_images/cyber_task.jpg', title: 'Cyber Clerk', price: 100, name: 'E-citizen', description: 'Book today for appointment with one of our agents and have your cyber services done for you'},
+    { id: 3, public:true, item_media_url: 'landing_images/content.jpg', title: 'Content Generation', price: 100, name: 'Shorts, Reels and Posts', description: 'Consider hiring our services and experience first class content creation and delivery to suite your every need'},
+    { id: 4, public:true, item_media_url: 'landing_images/software_task.jpg', title: 'Software Development', price: 100, name: 'WebApps, Android Apps, iOS, Blockchain', description: 'Consider hiring us and have your sensitive software handled by the best in the business'},
+    { id: 5, public:true, item_media_url: 'landing_images/travel_task.jpg', title: 'Booking Travel', price:100, name: 'Rail, Road', description: 'Consider booking your next travel with us at the comfort of your mobile device'}
 ];
+
+const items_of_sale = [
+    {
+        id:10,
+        public:true,
+        item_media_url:get_item_display_media_url(10),
+        item_insta_card_big_url: get_item_insta_big_template_url(10),
+        item_insta_card_small_url: get_item_insta_small_template_url(10),
+        item_order_card_url: get_item_order_template_url(10),
+        item_receipt_card_url: get_item_receipt_template_url(10),
+        title:"",
+        price:"",
+        name: "",
+        description: ""
+
+    }
+];
+
+const item_media_template_dictionary = {
+    10: {},
+    11: {},
+    12: {},
+}
+
+function add_items_of_sale(){
+    console.log('calling add_items_of_sale')
+}
+    
+
+function get_item_display_media_url(item_id){
+    console.log('calling get_current_item_display_media_url');
+}
+
+function get_item_insta_big_template_url(item_id){
+    console.log('calling get_current_item_insta_big_template_url') ;
+}
+
+function get_item_insta_small_template_url(item_id){
+    console.log('calling get_current_item_insta_small_template_url');
+}
+
+function get_item_order_template_url(item_id){
+    console.log('calling get_current_order_template_url');
+}
+
+function get_item_receipt_template_url(item_id){
+    console.log('calling get_current_item_receipt_template_url');
+}
 
 
 const botView = {
@@ -28,17 +84,44 @@ const botView = {
             { id: 'about', label: 'About', icon: 'fa-solid fa-info-circle' }
         ]
     ],
+
+    current_first_middle_buttons: [
+        { id: 'check_in', label: 'Check-in', icon: 'fa-solid fa-right-to-bracket' },
+        { id: 'shop', label: 'Shop', icon: 'fa-brands fa-searchengin' },
+    ],
+
+    current_bot_customer_inactive_buttons: [
+        
+        { id: 'shop', label: 'Shop', icon: 'fa-brands fa-searchengin' },
+    ],
+
+    current_bot_customer_active_buttons:[
+        { id: 'check_in', label: 'Check-in', icon: 'fa-solid fa-right-to-bracket' },
+        { id: 'shop', label: 'Shop', icon: 'fa-brands fa-searchengin' },
+        { id: 'wallet', label: 'Wallet', icon: 'fa-solid fa-wallet' }
+    ],
+
+
     current_middle_button: [
         [
             { id: 'refresh', label: 'Refresh', icon: 'fa-solid fa-refresh' },
-            { id: 'camera', label: 'Scanner', icon: 'fa-solid fa-camera' }
+            { id: 'camera', label: 'Scanner', icon: 'fa-solid fa-camera' },
+            { id: 'games', label: 'Games', icon: 'fa-solid fa-gamepad' },
+            { id: 'smarttv', label: 'Stream', icon: 'fa-solid fa-display' }
         ]
     ],
-    current_game_button: [
-        [
-            { id: 'games', label: 'Games', icon: 'fa-solid fa-gamepad' }
-        ]
+
+    current_bot_middle_customer_active_buttons:[
+        { id: 'camera', label: 'Scanner', icon: 'fa-solid fa-camera' },
+        { id: 'smarttv', label: 'Watch', icon: 'fa-solid fa-display' }
     ],
+
+    current_bot_middle_customer_inactive_buttons: [
+        { id: 'camera', label: 'Scanner', icon: 'fa-solid fa-camera' },
+        { id: 'games', label: 'Games', icon: 'fa-solid fa-gamepad' }
+    ],
+
+    
     
     current_checkin_base_buttons: [
         { id: 'redeem', label: 'Redeem', icon: 'fa-solid fa-gift' },
@@ -62,6 +145,48 @@ const botView = {
         content: 'Shopping information'
     },
 
+    current_shop_base_0_buttons: [
+        { id: 'update_location', label: 'Location', icon: 'fa-solid fa-location-crosshairs'},
+        { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
+    ],
+
+    current_shop_base_0_info: {
+        title: "Shopping 0",
+        content: "Shopping 0 Information"
+    },
+
+    current_shop_base_1_buttons: [
+        { id: 'proceed_shopping', label: 'Proceed', icon: 'fa-solid fa-arrow-right'},
+        { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
+    ],
+
+    current_shop_base_1_info: {
+        title: "Shopping 1",
+        content: "Shopping 1 Information"
+    },
+
+    current_pu_pr_buttons: [
+        { id: "pu_pr_online", label: 'Online', icon: 'fa-solid fa-globe'},
+        { id: "pu_pr_physical", label: "Physical", icon: 'fa-solid fa-cart-shopping'},
+        { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
+    ],
+
+    current_pu_pr_info : {
+        title: "Select Service",
+        content: "Pu_PR content"
+    },
+
+    current_pu_buttons : [
+        { id: "pu_online", label: "Online", icon: "fa-solid fa-globe"},
+        { id: "pu_physical", label: "Physical", icon: "fa-solid fa-cart-shopping"},
+        { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
+    ],
+
+    current_pu_info : {
+        title: "Select Service",
+        content: "Pu content"
+    },
+
     current_wallet_base_buttons: [
         { id: 'mpesa', label: 'Mpesa', icon: 'fa-solid fa-money-bill'},
         { id: 'blockchain_minima', label: 'Minima', icon: 'fa-solid fa-bolt-lightning'},
@@ -83,6 +208,11 @@ const botView = {
         content: "Our scanner allows you to take pictures, scan qr codes and also pdfs"
     },
 
+    current_scanner_capture_base_buttons : [
+        // { id: 'start', label: 'Start', icon: "fa-solid fa-camera-rotate"},
+        { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
+    ],
+
     current_about_base_buttons : [
         { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
     ],
@@ -94,6 +224,7 @@ const botView = {
 
     current_checkin_redeem_buttons : [
         { id: 'checkin_redeem_copy', label: 'Paste', icon: 'fa-solid fa-paste'},
+        { id: 'checkin_redeem_clear', label: 'Clear', icon: 'fa-solid fa-eraser'},
         { id: 'checkin_redeem_submit', label: 'Submit', icon: 'fa-solid fa-arrow-right'},
         { id: 'second_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
     ],
@@ -111,6 +242,7 @@ const botView = {
 
     current_checkin_purchase_buttons : [
         { id: 'checkin_purchase_copy', label: 'Paste', icon: 'fa-solid fa-paste'},
+        { id: 'checkin_purchase_clear', label: 'Clear', icon: 'fa-solid fa-eraser'},
         { id: 'checkin_purchase_submit', label: 'Submit', icon: 'fa-solid fa-arrow-right'},
         { id: 'second_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
     ],
@@ -124,9 +256,79 @@ const botView = {
                 {label:'vendor', value:'select_vendor'}
             ]}
         ]
-    }
-     
+    },
 
+    current_checkin_redeem_success_result_info: {
+        title: "Success!",
+        content: "Your session is now active, press done to proceed",
+    },
+
+    current_checkin_redeem_success_buttons: [
+        { id: 'done', label: 'Done', icon: 'fa-solid fa-check'}
+    ],
+
+    current_checkin_redeem_fail_result_info: {
+        title: "Failed!",
+        content: "Your session was unable to redeem, please try again"
+    },
+
+    current_checkin_redeem_fail_buttons: [
+        { id: 'retry_checkin_redeem', label: 'Retry', icon: 'fa-solid fa-arrow-rotate-right'},
+        { id: 'second_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
+    ],
+
+
+    current_checkin_purchase_success_result_info: {
+        title: "Success!",
+        content: "Your session is now active, press done to proceed",
+    },
+
+    current_checkin_purchase_success_buttons: [
+        { id: 'done', label: 'Done', icon: 'fa-solid fa-check'}
+    ],
+
+    current_checkin_purchase_fail_result_info: {
+        title: "Failed!",
+        content: "Your session was unable to redeem, please try again"
+    },
+
+    current_checkin_purchase_fail_buttons: [
+        { id: 'retry_checkin_purchase', label: 'Retry', icon: 'fa-solid fa-arrow-rotate-right'},
+        { id: 'second_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
+    ],
+
+    landing_game_screen_media:[
+        './static/bot_media/gameboyadvance_image.jpg'
+    ],
+
+    landing_game_top_buttons: [
+        { id: 'free_games', label: 'Free Games', icon: 'fa-solid fa-smile'},
+        { id: 'load_game', label: 'Load Game', icon: 'fa-solid fa-floppy-disk'}
+    ],
+
+    landing_game_middle_buttons:[
+        { id: 'select_game', label:'Select', icon: 'fa-solid fa-arrow-right'},
+        { id: 'start_game', label:'Start', icon:'fa-solid fa-check'}
+    ],
+
+    landing_game_gba_buttons:[
+       
+            { id: 'gba_left', label: '.', icon: 'fa-solid fa-caret-left'},
+            { id: 'gba_right', label: '.', icon: 'fa-solid fa-caret-right'},
+            { id: 'gba_up', label: '.', icon: 'fa-solid fa-caret-up'},
+            { id: 'gba_down', label: '.', icon: 'fa-solid fa-caret-down'},
+          
+            { id: 'gba_l', label: 'L', icon: 'fa-solid fa-l'},
+            { id: 'gba_r', label: 'R', icon: 'fa-solid fa-r'},
+            { id: 'gba_a', label: 'A', icon: 'fa-solid fa-a'},
+            { id: 'gba_b', label: 'B', icon: 'fa-solid fa-b'},
+        
+        
+    ],
+
+    landing_game_extra_buttons:[
+        { id: 'exit_gba', label: 'Exit', icon:'fa-solid fa-circle-xmark'}
+    ]
 
 };
 
@@ -156,6 +358,28 @@ function make_items_of_sale_view(){
             itemCardContainer.appendChild(card);
         }
     });
+}
+
+function update_items_of_sale_view(view_type){
+    console.log('calling update_items_of_sale_view');
+    screen_mode = getScreenMode();
+
+    if (screen_mode === "large"){
+        if (view_type === "pu_pr"){
+            console.log('rendering pu_pr in large screen')
+        }
+        else{
+            console.log('rendering pu in large screen')
+        }
+    }
+    else {
+        if (view_type === "pu_pr"){
+            console.log('rendering pu_pr in small screen')
+        }
+        else{
+            console.log('rendering pu in small screen')
+        }
+    }
 }
 
 function show_remaining_buttons(){
@@ -227,10 +451,11 @@ function show_first_active(){
 
     botButtonStackBig.innerHTML=""
     
-    button_list = [botView.current_bot_buttons[0][0]]
+    top_button_list = botView.current_first_middle_buttons
+    console.log(`current bot_list is ${top_button_list}`)
 
     
-    button_list.forEach(button => {
+    top_button_list.forEach(button => {
         const buttonBig = document.createElement('div')
         buttonBig.classList.add('bot_button_layer');
         buttonBig.innerHTML = `
@@ -249,12 +474,12 @@ function show_first_active(){
         botButtonStackBig.appendChild(buttonBig);
     });
 
-    button_list2 = [botView.current_middle_button[0][1]];
+    middle_button_list = [botView.current_middle_button[0][1], botView.current_middle_button[0][2] ];
 
     const botButtonStackMiddle = document.getElementById('botButtonStackMiddle');
     botButtonStackMiddle.innerHTML=""
 
-    button_list2.forEach(button => {
+    middle_button_list.forEach(button => {
         const buttonBig = document.createElement('div');
         buttonBig.classList.add('bot_button_layer');
         buttonBig.innerHTML = `
@@ -277,7 +502,9 @@ function show_first_active(){
     const botButtonStackContact = document.getElementById('botButtonStackContact');
     botButtonStackContact.innerHTML=""
 
-    botView.current_bot_buttons[1].forEach(button => {
+    const contact_button_list = botView.current_bot_buttons[1]
+
+    contact_button_list.forEach(button => {
         const buttonBig = document.createElement('div');
         buttonBig.classList.add('bot_button_layer');
         buttonBig.innerHTML = `
@@ -303,12 +530,15 @@ function show_first_inactive(){
     console.log('calling show_first_inactive');
 
     const botButtonStackBig = document.getElementById('botButtonStackBig');
+
     botButtonStackBig.innerHTML=""
     
-    button_list = [botView.current_bot_buttons[0][0]]
+    top_button_list = botView.current_first_middle_buttons
+    console.log(`current bot_list is ${top_button_list}`)
 
-    button_list.forEach(button => {
-        const buttonBig = document.createElement('div');
+    
+    top_button_list.forEach(button => {
+        const buttonBig = document.createElement('div')
         buttonBig.classList.add('bot_button_layer');
         buttonBig.innerHTML = `
             <input type="hidden" name="intent" value="${button.label}">
@@ -326,12 +556,12 @@ function show_first_inactive(){
         botButtonStackBig.appendChild(buttonBig);
     });
 
-    button_list2 = [botView.current_middle_button[0][1]];
+    middle_button_list = [ botView.current_middle_button[0][1], botView.current_middle_button[0][2], botView.current_middle_button[0][3]];
 
     const botButtonStackMiddle = document.getElementById('botButtonStackMiddle');
     botButtonStackMiddle.innerHTML=""
 
-    button_list2.forEach(button => {
+    middle_button_list.forEach(button => {
         const buttonBig = document.createElement('div');
         buttonBig.classList.add('bot_button_layer');
         buttonBig.innerHTML = `
@@ -354,7 +584,9 @@ function show_first_inactive(){
     const botButtonStackContact = document.getElementById('botButtonStackContact');
     botButtonStackContact.innerHTML=""
 
-    botView.current_bot_buttons[1].forEach(button => {
+    const contact_button_list = botView.current_bot_buttons[1]
+
+    contact_button_list.forEach(button => {
         const buttonBig = document.createElement('div');
         buttonBig.classList.add('bot_button_layer');
         buttonBig.innerHTML = `
@@ -382,7 +614,7 @@ function show_customer_active(){
     const botButtonStackBig = document.getElementById('botButtonStackBig');
     botButtonStackBig.innerHTML=""
     
-    button_list = botView.current_bot_buttons[0]
+    button_list = botView.current_bot_customer_active_buttons
 
     button_list.forEach(button => {
         const buttonBig = document.createElement('div');
@@ -403,7 +635,7 @@ function show_customer_active(){
         botButtonStackBig.appendChild(buttonBig);
     });
 
-    button_list2 = botView.current_middle_button[0]
+    button_list2 = botView.current_bot_middle_customer_active_buttons
 
     const botButtonStackMiddle = document.getElementById('botButtonStackMiddle');
     botButtonStackMiddle.innerHTML = ""
@@ -454,8 +686,81 @@ function show_customer_active(){
 
 function show_customer_inactive(){
     console.log('calling show_customer_inactive');
-    show_first_active();
+
+    const botButtonStackBig = document.getElementById('botButtonStackBig');
+    botButtonStackBig.innerHTML=""
+    
+    button_list = botView.current_bot_customer_inactive_buttons
+
+    button_list.forEach(button => {
+        const buttonBig = document.createElement('div');
+        buttonBig.classList.add('bot_button_layer');
+        buttonBig.innerHTML = `
+            <input type="hidden" name="intent" value="${button.label}">
+            <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="type-label">${button.label}</span>
+                    </div>
+                    <div class="col-4">
+                        <span class="type_label"><i class="${button.icon}"></i></span>
+                    </div>
+                </div>
+            </button>
+        `;
+        botButtonStackBig.appendChild(buttonBig);
+    });
+
+    button_list2 = botView.current_bot_middle_customer_inactive_buttons
+
+    const botButtonStackMiddle = document.getElementById('botButtonStackMiddle');
+    botButtonStackMiddle.innerHTML = ""
+
+    button_list2.forEach(button => {
+        const buttonBig = document.createElement('div');
+        buttonBig.classList.add('bot_button_layer');
+        buttonBig.innerHTML = `
+        <input type="hidden" name="intent" value="${button.label}">
+            <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="type-label">${button.label}</span>
+                    </div>
+                    <div class="col-4">
+                        <span class="type_label"><i class="${button.icon}"></i></span>
+                    </div>
+                </div>
+            </button>
+        `;
+
+        botButtonStackMiddle.appendChild(buttonBig);
+    });
+
+    const botButtonStackContact = document.getElementById('botButtonStackContact');
+    botButtonStackContact.innerHTML = ""
+
+    botView.current_bot_buttons[1].forEach(button => {
+        const buttonBig = document.createElement('div');
+        buttonBig.classList.add('bot_button_layer');
+        buttonBig.innerHTML = `
+        <input type="hidden" name="intent" value="${button.label}">
+            <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="type-label">${button.label}</span>
+                    </div>
+                    <div class="col-4">
+                        <span class="type_label"><i class=" ${button.icon}"></i></span>
+                    </div>
+                </div>
+            </button>
+        `;
+
+        botButtonStackContact.appendChild(buttonBig);
+    });
+    
 }
+
 
 function show_vendor_active(){
     console.log('calling show_vendor_active');
@@ -535,7 +840,7 @@ function show_vendor_active(){
 }
 
 function show_vendor_inactive(){
-    console.loge('calling show_vendor_inactive');
+    console.log('calling show_vendor_inactive');
     show_first_active();
 }
 
@@ -671,6 +976,196 @@ function show_shop_info(){
 }
 
 
+function show_shop_base_0_info(){
+    console.log('calling show_shop_base_0_info');
+
+    const botInfoDisplay = document.getElementById('botInfoDisplay');
+
+    if(botInfoDisplay){
+        botInfoDisplay.style.display = "block";
+        botInfoDisplay.innerHTML=`
+        <h5 class="bot_header">${botView.current_shop_base_0_info.title}</h5>
+        <p class="bot_header">${botView.current_shop_base_0_info.content}</p>
+        `
+    }
+}
+
+function show_shop_base_0_navigation(){
+    console.log('calling show_shop_base_0_navigation');
+
+    const botNavigation = document.getElementById("botNavigation");
+    if (botNavigation){
+        botNavigation.style.display = "block";
+
+        botView.current_shop_base_0_buttons.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+
+            botNavigation.appendChild(buttonBig);
+        });
+
+
+    }
+}
+
+
+
+function show_shop_base_1_info(){
+    console.log('calling show_shop_base_1_info');
+
+    const botInfoDisplay = document.getElementById('botInfoDisplay');
+
+    if(botInfoDisplay){
+        botInfoDisplay.style.display = "block";
+        botInfoDisplay.innerHTML=`
+        <h5 class="bot_header">${botView.current_shop_base_1_info.title}</h5>
+        <p class="bot_header">${botView.current_shop_base_1_info.content}</p>
+        `
+    }
+}
+
+function show_shop_base_1_navigation(){
+    console.log('calling show_shop_base_1_navigation');
+
+    const botNavigation = document.getElementById("botNavigation");
+    if (botNavigation){
+        botNavigation.style.display = "block";
+
+        botView.current_shop_base_1_buttons.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+
+            botNavigation.appendChild(buttonBig);
+        });
+
+
+    }
+
+}
+
+
+function show_pu_pr_info(){
+    console.log('calling show_pu_pr_info');
+
+    const botInfoDisplay = document.getElementById('botInfoDisplay');
+
+    if(botInfoDisplay){
+        botInfoDisplay.style.display = "block";
+        botInfoDisplay.innerHTML=`
+        <h5 class="bot_header">${botView.current_pu_pr_info.title}</h5>
+        <p class="bot_header">${botView.current_pu_pr_info.content}</p>
+        `
+    }
+}
+
+function show_pu_pr_navigation(){
+    console.log('calling show_pu_pr_navigation');
+
+    const botNavigation = document.getElementById("botNavigation");
+    botNavigation.innerHTML="";
+
+    if (botNavigation){
+        botNavigation.style.display = "block";
+
+        botView.current_pu_pr_buttons.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+
+            botNavigation.appendChild(buttonBig);
+        });
+
+
+    }
+}
+
+
+function show_pu_info(){
+    console.log('calling show_pu_info');
+
+    const botInfoDisplay = document.getElementById('botInfoDisplay');
+
+    if(botInfoDisplay){
+        botInfoDisplay.style.display = "block";
+        botInfoDisplay.innerHTML=`
+        <h5 class="bot_header">${botView.current_pu_info.title}</h5>
+        <p class="bot_header">${botView.current_pu_info.content}</p>
+        `
+    }
+}
+
+function show_pu_navigation(){
+    console.log('calling show_pu_navigation');
+
+    const botNavigation = document.getElementById("botNavigation");
+    botNavigation.innerHTML = "";
+
+    if (botNavigation){
+        botNavigation.style.display = "block";
+
+        botView.current_pu_buttons.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+
+            botNavigation.appendChild(buttonBig);
+        });
+
+
+    }
+}
+
+
 function show_wallet_base_navigation(){
     console.log('calling show_wallet_base_navigation');
 
@@ -763,6 +1258,56 @@ function show_scanner_info(){
         `
     }
 
+}
+
+function show_camera_screen_navigation(){
+    console.log('calling show_camera_screen_navigation');
+
+    const botNavigation = document.getElementById("botNavigation");
+    if (botNavigation){
+        botNavigation.style.display = "block";
+
+        botNavigation.innerHTML = "";
+
+        botView.current_scanner_capture_base_buttons.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+
+            botNavigation.appendChild(buttonBig);
+        });
+
+
+    }
+
+}
+
+function show_camera_screen(){
+    console.log('calling show_camera_screen');
+
+    const botInfoDisplay = document.getElementById("botInfoDisplay");
+
+    if(botInfoDisplay){
+        // show feed for selected camera
+        botInfoDisplay.innerHTML="";
+
+        botInfoDisplay.innerHTML = `
+            <div id="reader" width="600px">
+            </div>
+        `
+    }
 }
 
 function show_about_base_navigation(){
@@ -905,6 +1450,19 @@ function pasteRedeemCodeToInput() {
     }
 }
 
+function clear_redeem_paste() {
+    console.log('Calling clear_redeem_paste');
+    
+    const inputField = document.getElementById('redeemInput');
+    
+    if (inputField) {
+        inputField.value = ''; // Clear the input field value
+        console.log('Redeem input field cleared');
+    } else {
+        console.error('Redeem input field not found');
+    }
+}
+
 
 function pastePurchaseCodeInput() {
     console.log('Paste button clicked for purchase');
@@ -929,13 +1487,23 @@ function pastePurchaseCodeInput() {
     }
 }
 
+function clear_purchase_paste(){
+    console.log(`calling clear_purchase_paste`);
+    const inputField = document.getElementById('purchaseInput');
+    if (inputField) {
+        inputField.value = ''; // Clear the input field value
+        console.log('Purchase input field cleared');
+    } else {
+        console.error('Purchase input field not found');
+    }
+}
+
 
 // Adjust the height of the textarea dynamically
 function adjustTextareaHeight(textarea) {
     textarea.style.height = 'auto'; // Reset height to recalculate
     textarea.style.height = textarea.scrollHeight + 'px'; // Set new height
 }
-
 
 
 function show_checkin_purchase_navigation(){
@@ -1003,4 +1571,317 @@ function show_checkin_purchase_info() {
         `;
     }
 }
+
+
+
+function show_checkin_redeem_success_status_info(){
+    console.log(`calling show_checkin_redeem_status_info`)
+
+    const botInfoDisplay = document.getElementById('botInfoDisplay');
+
+    if(botInfoDisplay){
+        botInfoDisplay.style.display = "block";
+        botInfoDisplay.innerHTML=`
+        <h5 class="bot_header">${botView.current_checkin_redeem_success_result_info.title}</h5>
+        <p class="bot_header">${botView.current_checkin_redeem_success_result_info.content}</p>
+        `
+    }   
+}
+
+function show_checkin_purchase_success_status_info(){
+    console.log('calling show_checkin_purchase_success_status_info');
+
+    const botInfoDisplay = document.getElementById('botInfoDisplay');
+
+    if(botInfoDisplay){
+        botInfoDisplay.style.display = "block";
+        botInfoDisplay.innerHTML=`
+        <h5 class="bot_header">${botView.current_checkin_purchase_success_result_info.title}</h5>
+        <p class="bot_header">${botView.current_checkin_purchase_success_result_info.content}</p>
+        `
+    }
+}
+
+function show_checkin_redeem_success_navigation(){
+    console.log(`calling show_checkin_redeem_navigation`)
+
+    const botNavigation = document.getElementById("botNavigation");
+
+    if (botNavigation){
+        botNavigation.style.display = "block";
+
+        botView.current_checkin_redeem_success_buttons.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+
+            botNavigation.appendChild(buttonBig);
+        });
+
+
+    }
+}
+
+function show_checkin_purchase_success_navigation(){
+    console.log(' calling show_checkin_purchase_success_navigation')
+
+    const botNavigation = document.getElementById("botNavigation");
+    
+    if (botNavigation){
+        botNavigation.style.display = "block";
+
+        botView.current_checkin_purchase_success_buttons.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+
+            botNavigation.appendChild(buttonBig);
+        });
+
+
+    }
+
+}
+
+function showCriticalConsoleError(data) {
+    const botInfoDisplay = document.getElementById('botInfoDisplay');
+    let callStack = "Unknown Call Stack";
+    let errorLocation = "Unknown Location";
+
+    // Parse the stack trace to identify the calling functions and location
+    try {
+        const stackLines = new Error().stack.split("\n");
+        
+        if (stackLines.length > 1) {
+            // Extract error location from the first relevant stack line
+            const errorLine = stackLines[2] || ""; // Line after this function call
+            const locationMatch = errorLine.match(/\((.*?):(\d+):(\d+)\)/);
+
+            if (locationMatch) {
+                const [_, file, line, column] = locationMatch;
+                errorLocation = `File: ${file}, Line: ${line}, Column: ${column}`;
+            }
+
+            // Format the stack trace
+            callStack = stackLines.slice(1).map((line, index) => `#${index} ${line.trim()}`).join("<br>");
+        }
+    } catch (error) {
+        console.error("Error retrieving call stack:", error);
+        callStack = "Unable to retrieve call stack.";
+    }
+
+    // Display the error in the bot interface
+    if (botInfoDisplay) {
+        botInfoDisplay.style.display = "block";
+        botInfoDisplay.innerHTML = `
+            <h5 class="bot_header">Environment Error</h5>
+            <p class="bot_header"><strong>Error Location:</strong> ${errorLocation}</p>
+            <p class="bot_header"><strong>Call Stack:</strong></p>
+            <p class="bot_header">${callStack}</p>
+            <p class="bot_header"><strong>Error Details:</strong> ${data}</p>
+        `;
+    }
+}
+
+
+function show_game_boy_advance_display(){
+    console.log('calling show_game_boy_advance_display')
+    // document.getElementById('itemCardContainer').style.display= "none";
+    document.getElementById('botScreenBig').src = botView.landing_game_screen_media[0]
+}
+
+function show_game_boy_advance_button_stack(){
+    console.log('calling show_game_boy_advance_button_stack')
+    fold_bot_start_display();
+    show_game_landing_info();
+    show_game_top_button_stack();
+
+    // show_game_middle_button_stack();
+    
+    // show_game_gameboy_advance_button_stack();
+    show_game_extra_button_stack();
+}
+
+function show_game_landing_info(){
+    console.log('calling show_game_landing_info');
+
+    let botHeader = document.getElementById("botHeader");
+
+    botHeader.innerHTML = 'Game Boy Advance'
+    botHeader.style.display = "block"
+}
+
+function show_game_top_button_stack(){
+    console.log('calling show_game_top_button_stack');
+
+    const botGBATopButtonStack = document.getElementById("botGBATopButtonStack");
+
+    if (botGBATopButtonStack){
+        botGBATopButtonStack.style.display = "block";
+
+        const gba_top_button_stack_list = botView.landing_game_top_buttons;
+
+        botGBATopButtonStack.innerHTML = ""
+
+        gba_top_button_stack_list.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+            botGBATopButtonStack.appendChild(buttonBig); // Fix the appendChild call
+        });
+    }   
+    else{
+        console.error("Element botGBATopButtonStack not found")
+    }
+}
+
+function show_game_middle_button_stack() {
+    console.log('calling show_game_middle_button_stack');
+
+    const botGBAMiddleButtonStack = document.getElementById("botGBAMiddleButtonStack");
+
+    if (botGBAMiddleButtonStack) {
+        botGBAMiddleButtonStack.style.display = "block";
+
+        const gba_middle_button_stack_list = botView.landing_game_middle_buttons; // Initialize an empty array or populate it with buttons
+
+        // Clear existing content in the stack (optional, depends on your use case)
+        botGBAMiddleButtonStack.innerHTML = ""
+
+        gba_middle_button_stack_list.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+            botGBAMiddleButtonStack.appendChild(buttonBig); // Fix the appendChild call
+        });
+    } else {
+        console.error("Element 'botGBAMiddleButtonStack' not found");
+    }
+}
+
+
+function show_game_gameboy_advance_button_stack(){
+    console.log('calling show_game_gameboy_advance_button_stack')
+
+    const botGBAPlayButtonStack = document.getElementById('botGBAPlayButtonStack');
+
+    if(botGBAPlayButtonStack){
+        botGBAPlayButtonStack.style.display = "block";
+
+        const gba_game_play_button_stack_list = botView.landing_game_gba_buttons;
+
+        botGBAPlayButtonStack.innerHTML = "";
+
+        gba_game_play_button_stack_list.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+            botGBAPlayButtonStack.appendChild(buttonBig); // Fix the appendChild call
+        });
+    }
+    else{
+        console.error('Element botGBAPlayButtonStack not found')
+    }
+
+}   
+
+
+
+function show_game_extra_button_stack(){
+    console.log('calling show_game_extra_button_stack');
+
+    const botGBAFooterButtonStack = document.getElementById('botGBAFooterButtonStack');
+
+    if(botGBAFooterButtonStack){
+
+        botGBAFooterButtonStack.style.display = "block";
+
+        const gba_game_footer_button_stack_list = botView.landing_game_extra_buttons;
+
+        botGBAFooterButtonStack.innerHTML = "";
+
+        gba_game_footer_button_stack_list.forEach(button => {
+            const buttonBig = document.createElement('div');
+            buttonBig.classList.add('bot_button_layer');
+            buttonBig.innerHTML = `
+                <input type="hidden" name="intent" value="${button.label}">
+                <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                    <div class="row">
+                        <div class="col-8">
+                            <span class="type-label">${button.label}</span>
+                        </div>
+                        <div class="col-4">
+                            <span class="type_label"><i class="${button.icon}"></i></span>
+                        </div>
+                    </div>
+                </button>
+            `;
+            botGBAFooterButtonStack.appendChild(buttonBig); // Fix the appendChild call
+        });
+    }
+    else{
+        console.error('Element botGBAPlayButtonStack not found')
+    }
+}
+
 

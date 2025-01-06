@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebUSB Receipt Printer</title>
+</head>
+<body>
+    <h1>WebUSB Receipt Printer</h1>
+    <button id="connectPrinter">Connect to Printer</button>
+    <button id="printTest">Print Test</button>
+
+    <!-- Include the UMD script -->
+    <script src="../WebUSBReceiptPrinter/dist/webusb-receipt-printer.umd.js"></script>
+
+    <script>
+        // Initialize the library
+        const receiptPrinter = new WebUSBReceiptPrinter();
+
+        // Function to handle printer connection
+        async function connectPrinter() {
+            try {
+                const device = await receiptPrinter.connect();
+                console.log("Printer connected:", device);
+            } catch (error) {
+                console.error("Error connecting to printer:", error);
+            }
+        }
+
+        // Function to print a test receipt
+        async function printTestReceipt() {
+            try {
+                const testMessage = "Hello, WebUSB Printer!\n\n";
+                await receiptPrinter.print(testMessage);
+                console.log("Test receipt printed successfully.");
+            } catch (error) {
+                console.error("Error printing receipt:", error);
+            }
+        }
+
+        // Attach event listeners to buttons
+        const connectPrinterButton = document.getElementById("connectPrinter");
+        const printTestButton = document.getElementById("printTest");
+
+        connectPrinterButton.addEventListener("click", connectPrinter);
+        printTestButton.addEventListener("click", printTestReceipt);
+    </script>
+</body>
+</html>
