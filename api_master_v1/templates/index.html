@@ -1,61 +1,69 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000"> <!-- Define theme color for PWA -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- Reference favicon -->
+    <link rel="manifest" href="/manifest.json"> <!-- Link the manifest file -->
+    
+    <!-- External CSS Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide.min.css" integrity="sha512-KhFXpe+VJEu5HYbJyKQs9VvwGB+jQepqb4ZnlhUF/jQGxYJcjdxOTf6cr445hOc791FFLs18DKVpfrQnONOB1g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap-grid.min.css" integrity="sha512-uzG4YY/dpwIEUrfjYud6T7ieVM06DwkHYiB28wgbtq0w4hSGx3XyDF2Oh/VaxB0hmyxyR3hYHNQc4Chb/dS1Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap-reboot.min.css" integrity="sha512-Hvxqga90bvpEid1McCftiBMcfB8cPXI+TZR3GVf4KUdLu3NPx6/gPXSQTdY7AHaLLJDSJym6kOotc713b2D7gQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" integrity="sha512-rt/SrQ4UNIaGfDyEXZtNcyWvQeOq0QLygHluFQcSjaGB04IxWhal71tKuzP6K8eYXYB6vJV4pHkXcmFGGQ1/0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./static/css/main.css">
+    
+    <title>Bot Interface</title>
+</head>
 
-{% block content %}
+<body class="body">
     <div class="parent_display_container">
         
+        <!-- Bot Display Section -->
         <div class="bot_display_section">
             <div class="bot_app">
                 <div class="bot_app_screen">
                     <img id="botScreenBig" class="bot_screen" src="" alt="Bot Screen">
                 </div>
                 <h5 id="botHeader" class="bot_header">Bot Header</h5>
-                <div id="botInfoDisplay" class="bot_app_button_stack">
+                <div id="botInfoDisplay" class="bot_app_button_stack"></div>
 
-                </div>
+                <!-- Dynamic button stacks -->
+                <div id="botButtonStackBig" class="bot_app_button_stack"></div>
+                <div id="botButtonStackMiddle" class="bot_app_button_stack"></div>
+                <div id="botButtonStackContact" class="bot_app_button_stack"></div>
 
-                <div id="botButtonStackBig" class="bot_app_button_stack">
-                    <!-- Buttons will be populated here by JavaScript -->
-                </div>
-                <div id="botButtonStackMiddle" class="bot_app_button_stack">
-                    <!-- Scan Camera -->
-                </div>
-                <div id="botButtonStackContact" class="bot_app_button_stack">
-                    <!-- Contact section -->
-                </div>
-
-                <div id="botNavigation" class="bot_app_button_stack">
-
-                </div>
-                
-                
+                <div id="botNavigation" class="bot_app_button_stack"></div>
+                <div id="botGBATopButtonStack" class="bot_app_button_stack"></div>
+                <div id="botGBAMiddleButtonStack" class="bot_app_button_stack"></div>
+                <div id="botGBAPlayButtonStack" class="bot_app_button_stack"></div>
+                <div id="botGBAFooterButtonStack" class="bot_app_button_stack"></div>
             </div>
         </div>
 
+        <!-- Large Display Section -->
         <div class="large_display_section">
-            
-            <div id="itemCardContainer" class="item_card_container">
-                <div class="top_back_btn_layer">
-                    <button class="top_back_btn ">
-                        <div class="row">
-                            <div class="col-4">
-                                <span class="type_label"><i class="fa-solid fa-arrow-left"></i></span>
-                            </div>
-                            <div class="col-8">
-                                <span class="type-label">Back</span>
-                            </div>
-                            
-                        </div>
-                    </button>
-                </div>
-
-                <!-- Item cards will be populated here by JavaScript -->
-            </div>
+            <div id="itemCardContainer" class="item_card_container"></div>
         </div>
-        
-        
-        
-
     </div>
 
-{% endblock content %}
+    <!-- Scripts -->
+    <script src="./static/js/mds.js"></script>
+    <script src="./static/js/data.js"></script>
+    <script src="./static/js/main.js"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script src="./static/js/service-worker-register.js"></script>
 
+    <!-- External JS Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.min.js" integrity="sha512-7rusk8kGPFynZWu26OKbTeI+QPoYchtxsmPeBqkHIEXJxeun4yJ4ISYe7C6sz9wdxeE1Gk3VxsIWgCZTc+vX3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.js" integrity="sha512-sl3gwaqOnxE9dQ3IY+2A8pDjhOhOFqyfamT7GSaT3Cbz8svrV1aWHOGZ1ZG1GExNLpK5VvRGD5ULSHEQ8fajGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- html5-qrcode -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</body>
+</html>

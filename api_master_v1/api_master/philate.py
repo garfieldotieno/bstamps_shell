@@ -323,7 +323,6 @@ def decode_qr_code(image_binary):
 
 def calculate_file_hash(file_path):
     try:
-
         BUF_SIZE = 65536
         sha256 = hashlib.sha256()
 
