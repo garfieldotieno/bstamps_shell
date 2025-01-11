@@ -39,13 +39,13 @@
   ],
   "screenshots": [
     {
-      "src": "static/screenshots/screenshot-desktop.png",
+      "src": "screenshots/screenshot-desktop.png",
       "sizes": "1440x900",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
-      "src": "static/screenshots/screenshot-mobile.png",
+      "src": "screenshots/screenshot-mobile.png",
       "sizes": "640x1136",
       "type": "image/png",
       "form_factor": "narrow"
@@ -65,7 +65,7 @@
       "short_name": "Wallet",
       "description": "Open Wallet",
       "url": "/#wallet",
-      "icons": [{ "src": "static/assets/icons/192X192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "assets/icons/192X192.png", "sizes": "192x192" }]
     }
   ],
   "widgets": [
