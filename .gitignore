@@ -1,3 +1,6 @@
+*.pyc
+__pycache__/
+
 api_master_v1/static/node_modules/*
 api_master_v1/venv/*
 api_master_v1/static/splide-3.1.2/*
