@@ -786,11 +786,14 @@ function process_checkin_purchase_submit(){
 
 function process_game(){
   console.log('processing game');
-
   show_game_boy_advance_display()
   show_game_boy_advance_button_stack()
 
+}
 
+function process_show_free_games(){
+  console.log('processing show free games');
+  show_game_boy_advance_items_of_sale()
 }
 
 function process_exit_gba(){

@@ -13,61 +13,141 @@ const sessionData = {
 //     { id: 3, public: true, item_media_url: 'landing_images/doom.jpeg', title: 'Item 3', price: 200, name: 'Item Three', description: 'Description of Item Three' }
 // ];
 
-const resourceData = [
-    { id: 1, public:true, item_media_url: 'landing_images/subscription_box.jpg', title: 'Subscription Box', price: 100, name: 'Electronics Box', description: 'Subscribe today and get the latest information and offers for your electronic products' },
-    { id: 2, public:true, item_media_url: 'landing_images/cyber_task.jpg', title: 'Cyber Clerk', price: 100, name: 'E-citizen', description: 'Book today for appointment with one of our agents and have your cyber services done for you'},
-    { id: 3, public:true, item_media_url: 'landing_images/content.jpg', title: 'Content Generation', price: 100, name: 'Shorts, Reels and Posts', description: 'Consider hiring our services and experience first class content creation and delivery to suite your every need'},
-    { id: 4, public:true, item_media_url: 'landing_images/software_task.jpg', title: 'Software Development', price: 100, name: 'WebApps, Android Apps, iOS, Blockchain', description: 'Consider hiring us and have your sensitive software handled by the best in the business'},
-    { id: 5, public:true, item_media_url: 'landing_images/travel_task.jpg', title: 'Booking Travel', price:100, name: 'Rail, Road', description: 'Consider booking your next travel with us at the comfort of your mobile device'}
-];
+
 
 const items_of_sale = [
-    {
-        id:10,
-        public:true,
-        item_media_url:get_item_display_media_url(10),
-        item_insta_card_big_url: get_item_insta_big_template_url(10),
-        item_insta_card_small_url: get_item_insta_small_template_url(10),
-        item_order_card_url: get_item_order_template_url(10),
-        item_receipt_card_url: get_item_receipt_template_url(10),
-        title:"",
-        price:"",
-        name: "",
-        description: ""
+    [
+        // shop items
+        {   id: 1, 
+            public:true, 
+            item_media_url: 'landing_images/subscription_box.jpg', 
+            item_insta_card_big_url: "",
+            item_insta_card_small_url: "",
+            item_order_card_url: "",
+            item_receipt_card_url: "",
+            title: 'Subscription Box', 
+            price: 100, 
+            name: 'Electronics Box', 
+            description: 'Subscribe today and get the latest information and offers for your electronic products' ,
+            item_type:"shopping",
+            view_type:""
+        },
+        // {   id: 2, 
+        //     public:true, 
+        //     item_media_url: 'landing_images/cyber_task.jpg', 
+        //     item_insta_card_big_url: "",
+        //     item_insta_card_small_url: "",
+        //     item_order_card_url: "",
+        //     item_receipt_card_url: "", 
+        //     title: 'Cyber Clerk', 
+        //     price: 100, 
+        //     name: 'E-citizen', 
+        //     description: 'Book today for appointment with one of our agents and have your cyber services done for you',
+        //     item_type:"shopping",
+        //     view_type:""
+        // },
+        // {   id: 3, 
+        //     public:true, 
+        //     item_media_url: 'landing_images/content.jpg', 
+        //     item_insta_card_big_url: "",
+        //     item_insta_card_small_url: "",
+        //     item_order_card_url: "",
+        //     item_receipt_card_url: "", 
+        //     title: 'Content Generation', 
+        //     price: 100, 
+        //     name: 'Shorts, Reels and Posts', 
+        //     description: 'Consider hiring our services and experience first class content creation and delivery to suite your every need',
+        //     item_type:"shopping",
+        //     view_type:""
+        // },
+        // {   id: 4, 
+        //     public:true, 
+        //     item_media_url: 'landing_images/software_task.jpg',
+        //     item_insta_card_big_url: "",
+        //     item_insta_card_small_url: "",
+        //     item_order_card_url: "",
+        //     item_receipt_card_url: "", 
+        //     title: 'Software Development', 
+        //     price: 100, 
+        //     name: 'WebApps, Android Apps, iOS, Blockchain', 
+        //     description: 'Consider hiring us and have your sensitive software handled by the best in the business',
+        //     item_type:"shopping",
+        //     view_type:""
+        // },
+        // {   id: 5, 
+        //     public:true, 
+        //     item_media_url: 'landing_images/travel_task.jpg', 
+        //     item_insta_card_big_url: "",
+        //     item_insta_card_small_url: "",
+        //     item_order_card_url: "",
+        //     item_receipt_card_url: "",
+        //     title: 'Booking Travel', 
+        //     price:100, 
+        //     name: 'Rail, Road', 
+        //     description: 'Consider booking your next travel with us at the comfort of your mobile device',
+        //     item_type:"shopping",
+        //     view_type:"pu_pr"
+        // }
 
-    }
+    ],
+    [
+        // game items
+        {
+            id:12,
+            public:true,
+            item_media_url:"landing_images/gba_super_mario.jpeg",
+            item_insta_card_big_url: "",
+            item_insta_card_small_url: "",
+            item_order_card_url: "",
+            item_receipt_card_url: "",
+            title:"Game Boy Advance",
+            price:0,
+            name: "Mario",
+            description: "Enjoy The Classic Mario Game",
+            item_type:"game_boy_advance",
+            view_type:"pu_pr"
+        },
+        {
+            id:10,
+            public:true,
+            item_media_url:"landing_images/gba_mortal_kombat_deadly_alliance.jpg",
+            item_insta_card_big_url: "",
+            item_insta_card_small_url: "",
+            item_order_card_url: "",
+            item_receipt_card_url: "",
+            title:"Game Boy Advance",
+            price:0,
+            name: "Mortal Kombat",
+            description: "Enjoy The Classic Mortal Kombat Daily Alliance",
+            item_type:"game_boy_advance",
+            view_type:"pu_pr"
+        },
+        {
+            id:11,
+            public:true,
+            item_media_url:"landing_images/gba_the_last_air_bender.jpeg",
+            item_insta_card_big_url: "",
+            item_insta_card_small_url: "",
+            item_order_card_url: "",
+            item_receipt_card_url: "",
+            title:"Game Boy Advance",
+            price:0,
+            name: "Avatar The Last Air Bender",
+            description: "Enjoy The Classic Air Bender",
+            item_type:"game_boy_advance",
+            view_type:"pu_pr"
+        }
+        
+    ]
+    
 ];
 
-const item_media_template_dictionary = {
-    10: {},
-    11: {},
-    12: {},
-}
 
 function add_items_of_sale(){
     console.log('calling add_items_of_sale')
 }
     
 
-function get_item_display_media_url(item_id){
-    console.log('calling get_current_item_display_media_url');
-}
-
-function get_item_insta_big_template_url(item_id){
-    console.log('calling get_current_item_insta_big_template_url') ;
-}
-
-function get_item_insta_small_template_url(item_id){
-    console.log('calling get_current_item_insta_small_template_url');
-}
-
-function get_item_order_template_url(item_id){
-    console.log('calling get_current_order_template_url');
-}
-
-function get_item_receipt_template_url(item_id){
-    console.log('calling get_current_item_receipt_template_url');
-}
 
 
 const botView = {
@@ -333,10 +413,10 @@ const botView = {
 };
 
     
-function make_items_of_sale_view(){
-    console.log("make items of sale called")
+function show_new_items_of_sale(){
+    console.log("show_new_items_of_sale called")
     const itemCardContainer = document.getElementById('itemCardContainer');
-    resourceData.forEach(item => {
+    items_of_sale[0].forEach(item => {
         if (item.public) {
             const card = document.createElement('div');
             card.classList.add('item_card');
@@ -381,6 +461,7 @@ function update_items_of_sale_view(view_type){
         }
     }
 }
+
 
 function show_remaining_buttons(){
     console.log('showing remianing buttons')
@@ -435,7 +516,7 @@ function show_big_screen_context_btns(){
     console.log('showing additional buttons for big screen bot');
     // show expected layout
     // populate item cards
-    make_items_of_sale_view()
+    show_new_items_of_sale()
 
     // Populate the bot screen and buttons
     document.getElementById('botScreenBig').src = botView.current_bot_screen_media[1];
@@ -1572,8 +1653,6 @@ function show_checkin_purchase_info() {
     }
 }
 
-
-
 function show_checkin_redeem_success_status_info(){
     console.log(`calling show_checkin_redeem_status_info`)
 
@@ -1707,6 +1786,48 @@ function showCriticalConsoleError(data) {
     }
 }
 
+function show_game_boy_advance_items_of_sale(){
+    console.log(`calling show_game_boy_advance_items_of_sale `)
+    // check if itemCardContainer is active
+    const itemCardContainer = document.getElementById('itemCardContainer');
+    if(itemCardContainer){
+        itemCardContainer.style.display="none"
+    }
+
+    const GBAItemCardContainer = document.getElementById('GBAItemCardContainer');
+    if(GBAItemCardContainer){
+        GBAItemCardContainer.style.display="block"
+        GBAItemCardContainer.innerHTML=""
+    }
+
+    items_of_sale[1].forEach(item => {
+        if (item.public) {
+            const card = document.createElement('div');
+            card.classList.add('item_card');
+            card.innerHTML = `
+                <img class="item_card_image" src="./static/media_store/${item.item_media_url}" alt="${item.title}">
+                <div class="item_info">
+                    <div class="item_info_title">
+                        <h3 class="item_title">${item.title}</h3>
+                        <p class="item_price">Ksh ${item.price}</p>
+                    </div>
+                    <p class="item_name">${item.name}</p>
+                    <p class="item_description">${item.description}</p>
+                </div>
+                <form class="item_get_button_layer itemForm">
+                    <input type="hidden" name="make_order_item_id" value="${item.id}">
+                    <button class="item_get_button">Get</button>
+                </form>
+            `;
+            GBAItemCardContainer.appendChild(card);
+        }
+    });
+
+    
+    
+}
+
+
 
 function show_game_boy_advance_display(){
     console.log('calling show_game_boy_advance_display')
@@ -1807,7 +1928,6 @@ function show_game_middle_button_stack() {
     }
 }
 
-
 function show_game_gameboy_advance_button_stack(){
     console.log('calling show_game_gameboy_advance_button_stack')
 
@@ -1844,8 +1964,6 @@ function show_game_gameboy_advance_button_stack(){
     }
 
 }   
-
-
 
 function show_game_extra_button_stack(){
     console.log('calling show_game_extra_button_stack');

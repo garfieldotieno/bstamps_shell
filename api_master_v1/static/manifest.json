@@ -1,0 +1,98 @@
+{
+  "id": "/",
+  "scope": "/",
+  "name": "KVC-R",
+  "display": "standalone",
+  "start_url": "/",
+  "short_name": "KVC-R",
+  "theme_color": "#E1477E",
+  "description": "This is a starter app",
+  "orientation": "any",
+  "background_color": "#EC5D0F",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay"],
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "icons": [
+    {
+      "src": "static/assets/icons/512X512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "static/assets/icons/192X192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "static/assets/icons/48X48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "static/assets/icons/24X24.png",
+      "sizes": "24x24",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "static/screenshots/screenshot-desktop.png",
+      "sizes": "1440x900",
+      "type": "image/png"
+    },
+    {
+      "src": "static/screenshots/screenshot-mobile.png",
+      "sizes": "640x1136",
+      "type": "image/png"
+    }
+  ],
+  "features": [
+    "Cross Platform",
+    "fast",
+    "simple"
+  ],
+  "categories": [
+    "social"
+  ],
+  "shortcuts": [
+    {
+      "name": "Open About",
+      "short_name": "About",
+      "description": "Open the about page",
+      "url": "/about",
+      "icons": [{ "src": "static/assets/icons/192X192.png", "sizes": "192x192" }]
+    }
+  ],
+  "widgets": [
+    {
+      "name": "KVC-R Widget",
+      "tag": "KVC-R Widget",
+      "ms_ac_template": "widget/ac.json",
+      "data": "widget/data.json",
+      "description": "A simple widget example from pwa-starter.",
+      "screenshots": [
+        {
+          "src": "assets/screenshots/widget-screen.png",
+          "sizes": "500x500",
+          "label": "Widget screenshot"
+        }
+      ],
+      "icons": [
+        {
+          "src": "assets/icons/48x48.png",
+          "sizes": "48x48"
+        }
+      ]
+    }
+  ],
+  "splash_screens": [
+    {
+      "src": "static/assets/splashscreen/background.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    }
+  ]
+}

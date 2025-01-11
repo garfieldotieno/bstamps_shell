@@ -6,6 +6,9 @@ const urlsToCache = [
     '/manifest.json',
     '/static/js/main.js',
     '/static/css/main.css',
+    '/static/js/mds.js',
+    '/static/js/data.js',
+    '/static/js/philate.js',
 ];
 
 // Install the service worker and cache assets
