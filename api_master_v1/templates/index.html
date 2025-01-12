@@ -15,12 +15,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap-grid.min.css" integrity="sha512-uzG4YY/dpwIEUrfjYud6T7ieVM06DwkHYiB28wgbtq0w4hSGx3XyDF2Oh/VaxB0hmyxyR3hYHNQc4Chb/dS1Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap-reboot.min.css" integrity="sha512-Hvxqga90bvpEid1McCftiBMcfB8cPXI+TZR3GVf4KUdLu3NPx6/gPXSQTdY7AHaLLJDSJym6kOotc713b2D7gQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" integrity="sha512-rt/SrQ4UNIaGfDyEXZtNcyWvQeOq0QLygHluFQcSjaGB04IxWhal71tKuzP6K8eYXYB6vJV4pHkXcmFGGQ1/0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+
     <!-- Link to the main css -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    
-    
     
     <title>KVC-R</title>
 </head>
@@ -33,6 +35,9 @@
             <div class="bot_app">
                 <div class="bot_app_screen">
                     <img id="botScreenBig" class="bot_screen" src="" alt="Bot Screen">
+                </div>
+                <div id="map" class="bot_app_screen_map" style="display: none">
+                    
                 </div>
                 <h5 id="botHeader" class="bot_header">Bot Header</h5>
                 <div id="botInfoDisplay" class="bot_app_button_stack"></div>
@@ -54,9 +59,7 @@
         <div class="large_display_section">
             <div id="itemCardContainer" class="item_card_container"></div>
             <div id="GBAItemCardContainer" class="item_card_container"></div>
-            
         </div>
-
     </div>
 
     <!-- Scripts -->

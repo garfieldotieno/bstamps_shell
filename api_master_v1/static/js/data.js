@@ -30,65 +30,37 @@ const items_of_sale = [
             name: 'Electronics Box', 
             description: 'Subscribe today and get the latest information and offers for your electronic products' ,
             item_type:"shopping",
-            view_type:""
+            view_type:"pu_pr"
         },
-        // {   id: 2, 
-        //     public:true, 
-        //     item_media_url: 'landing_images/cyber_task.jpg', 
-        //     item_insta_card_big_url: "",
-        //     item_insta_card_small_url: "",
-        //     item_order_card_url: "",
-        //     item_receipt_card_url: "", 
-        //     title: 'Cyber Clerk', 
-        //     price: 100, 
-        //     name: 'E-citizen', 
-        //     description: 'Book today for appointment with one of our agents and have your cyber services done for you',
-        //     item_type:"shopping",
-        //     view_type:""
-        // },
-        // {   id: 3, 
-        //     public:true, 
-        //     item_media_url: 'landing_images/content.jpg', 
-        //     item_insta_card_big_url: "",
-        //     item_insta_card_small_url: "",
-        //     item_order_card_url: "",
-        //     item_receipt_card_url: "", 
-        //     title: 'Content Generation', 
-        //     price: 100, 
-        //     name: 'Shorts, Reels and Posts', 
-        //     description: 'Consider hiring our services and experience first class content creation and delivery to suite your every need',
-        //     item_type:"shopping",
-        //     view_type:""
-        // },
-        // {   id: 4, 
-        //     public:true, 
-        //     item_media_url: 'landing_images/software_task.jpg',
-        //     item_insta_card_big_url: "",
-        //     item_insta_card_small_url: "",
-        //     item_order_card_url: "",
-        //     item_receipt_card_url: "", 
-        //     title: 'Software Development', 
-        //     price: 100, 
-        //     name: 'WebApps, Android Apps, iOS, Blockchain', 
-        //     description: 'Consider hiring us and have your sensitive software handled by the best in the business',
-        //     item_type:"shopping",
-        //     view_type:""
-        // },
-        // {   id: 5, 
-        //     public:true, 
-        //     item_media_url: 'landing_images/travel_task.jpg', 
-        //     item_insta_card_big_url: "",
-        //     item_insta_card_small_url: "",
-        //     item_order_card_url: "",
-        //     item_receipt_card_url: "",
-        //     title: 'Booking Travel', 
-        //     price:100, 
-        //     name: 'Rail, Road', 
-        //     description: 'Consider booking your next travel with us at the comfort of your mobile device',
-        //     item_type:"shopping",
-        //     view_type:"pu_pr"
-        // }
-
+        {   id: 2, 
+            public:true, 
+            item_media_url: 'landing_images/bender.jpg', 
+            item_insta_card_big_url: "",
+            item_insta_card_small_url: "",
+            item_order_card_url: "",
+            item_receipt_card_url: "",
+            title: 'Subscription Box', 
+            price: 100, 
+            name: 'Marijuana Box', 
+            description: 'Subscribe today and get the latest information and offers for your weed products' ,
+            item_type:"physical",
+            view_type:"pr"
+        },
+        {   id: 3, 
+            public:true, 
+            item_media_url: 'landing_images/bunny.jpg', 
+            item_insta_card_big_url: "",
+            item_insta_card_small_url: "",
+            item_order_card_url: "",
+            item_receipt_card_url: "",
+            title: 'Subscription', 
+            price: 100, 
+            name: 'Playboy Bunny', 
+            description: 'Subscribe today and get the latest information and offers for your playboy products' ,
+            item_type:"physical",
+            view_type:"pr"
+        },
+        
     ],
     [
         // game items
@@ -147,8 +119,6 @@ function add_items_of_sale(){
     console.log('calling add_items_of_sale')
 }
     
-
-
 
 const botView = {
     current_bot_screen_media: ['./static/bot_media/wake_up_big.gif', './static/bot_media/wake_up_small.gif'],
@@ -227,6 +197,13 @@ const botView = {
 
     current_shop_base_0_buttons: [
         { id: 'update_location', label: 'Location', icon: 'fa-solid fa-location-crosshairs'},
+        { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
+    ],
+
+    current_shop_base_0_active_buttons: [
+        { id: 'update_location', label: 'Location', icon: 'fa-solid fa-location-crosshairs'},
+        { id: 'cancel_location', label: 'Stop Track', icon: 'fa-solid fa-ban' },
+        { id: 'proceed_shopping', label: 'Proceed', icon: 'fa-solid fa-arrow-right'},
         { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
     ],
 
@@ -440,8 +417,21 @@ function show_new_items_of_sale(){
     });
 }
 
-function update_items_of_sale_view(view_type){
-    console.log('calling update_items_of_sale_view');
+function update_items_of_sale_view(){
+    console.log('\ncalling update_items_of_sale_view\n');
+
+    // check if pr_activated
+    const pr_activated = check_pr_activated();
+
+    if (pr_activated === true){
+        console.log('pr_activated is true')
+        view_type = "pu_pr";
+    }
+    else{
+        console.log('pr_activated is false')
+        view_type = "pu";
+    }
+
     screen_mode = getScreenMode();
 
     if (screen_mode === "large"){
@@ -516,7 +506,8 @@ function show_big_screen_context_btns(){
     console.log('showing additional buttons for big screen bot');
     // show expected layout
     // populate item cards
-    show_new_items_of_sale()
+    // show_new_items_of_sale()
+    update_items_of_sale_view();
 
     // Populate the bot screen and buttons
     document.getElementById('botScreenBig').src = botView.current_bot_screen_media[1];
@@ -1005,9 +996,6 @@ function show_checkin_info(){
 
 }
 
-
-
-
 function show_shop_base_navigation(){
     console.log('calling show_shop_base_navigation');
 
@@ -1245,6 +1233,7 @@ function show_pu_navigation(){
 
     }
 }
+
 
 
 function show_wallet_base_navigation(){
@@ -1490,17 +1479,17 @@ function show_checkin_redeem_info() {
         botInfoDisplay.innerHTML = `
             <h5 class="bot_header">${botView.current_checkin_redeem_info.title}</h5>
             <p class="bot_header">${botView.current_checkin_redeem_info.content}</p>
-            <select class="bot_select">
-                ${options}
-            </select>
             <br>
-            <br>
+            
             <input 
                 id="redeemInput" 
                 placeholder="Code will appear here" 
                 disabled 
                 class="redeemInput"
             />
+            <br>
+            <br>
+            <br>
         `;
     }
 }
@@ -1636,9 +1625,7 @@ function show_checkin_purchase_info() {
         botInfoDisplay.innerHTML = `
             <h5 class="bot_header">${botView.current_checkin_purchase_info.title}</h5>
             <p class="bot_header">${botView.current_checkin_purchase_info.content}</p>
-            <select class="bot_select">
-                ${options}
-            </select>
+            
             <br>
             <br>
             <input 
@@ -1647,7 +1634,8 @@ function show_checkin_purchase_info() {
                 placeholder="Message will appear here" 
                 disabled
             >
-
+            <br>
+            <br>
             <br>
         `;
     }

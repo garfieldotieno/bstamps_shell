@@ -206,9 +206,20 @@ function process_button_master(button) {
     case "free_games":
       process_show_free_games();
       break;
+
     case "exit_gba":
       process_exit_gba();
       break;
+    case "cancel_location":
+      process_cancel_location();
+      break;
+    case "pu_pr_online":
+      process_pu_pr_online();
+      break;  
+    case "pu_pr_physical":
+      process_pu_pr_physical();
+      break;
+    
 
     default:
       console.log(`No handler for button ID: ${select_btn}`);
@@ -312,9 +323,6 @@ function process_shop(){
 }
 
 
-
-
-
 // Function to animate the location button
 function animate_location() {
   const location_btn = document.getElementById('update_location');
@@ -371,121 +379,188 @@ function quit_location_track() {
     console.log("No active location tracking to stop.");
   }
 }
+
+
+let map = null; // Declare a global variable to hold the map instance
+
+function show_location_with_marker(latitude, longitude) {
+  console.log('Showing location with marker');
+
+  // Hide the bot_app_screen if it is visible
+  const bot_app_screen = document.querySelector('.bot_app_screen');
+  const map_screen = document.getElementById("map");
+
+  if (bot_app_screen) {
+    bot_app_screen.style.display = 'none';
+  }
+  map_screen.style.display = 'block';
+
+  // Check if the map is already initialized
+  if (!map) {
+    // Initialize the map if it doesn't exist
+    map = L.map('map').setView([latitude, longitude], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+  } else {
+    // If the map is already initialized, just update the view
+    map.setView([latitude, longitude], 13);
+  }
+
+  // Add a marker for the location
+  L.marker([latitude, longitude]).addTo(map).bindPopup('Your Location').openPopup();
+}
+
+
 function process_loca() {
-  console.log('processing loca');
+  console.log("Processing location...");
+  
+  // Throttle updates to avoid flooding the UI
+  let lastUpdateTime = 0;
 
-  // Fetch the current location and update the display
-  navigator.geolocation.getCurrentPosition(
-    function (position) {
-      animate_location(); // Animate when the location is fetched
+  // Check if geolocation permissions were previously granted
+  navigator.permissions
+    .query({ name: "geolocation" })
+    .then(function (permissionStatus) {
+      console.log("Geolocation permission state:", permissionStatus.state);
 
-      const botInfoDisplay = document.getElementById("botInfoDisplay");
-      if (botInfoDisplay) {
-        // Update the first child (h5) with "Updated Location"
-        const h5Element = botInfoDisplay.querySelector("h5");
-        if (h5Element) {
-          h5Element.innerHTML = "Updated Location";
-        }
-
-        // Update the second child (p) with fetched coordinates
-        const pElement = botInfoDisplay.querySelector("p");
-        if (pElement) {
-          const { latitude, longitude } = position.coords;
-          pElement.innerHTML = `Fetched Coordinates: ${latitude}, ${longitude}`;
-
-          // Push the coordinates to loca_stack
-          loca_stack.push({ latitude, longitude });
-          console.log('Current location stack is:', loca_stack);
-
-          const botNavigation = document.getElementById("botNavigation");
-
-          if (botNavigation) {
-            const buttonElements = botNavigation.querySelectorAll("button"); // Get all button elements inside botNavigation
-          
-            // Check if there are exactly 2 button elements
-            if (buttonElements.length === 2) {
-              console.log("Bot navigation contains 2 buttons. Showing shop base navigation...");
-          
-              // Remove the last child element (last button) of botNavigation
-              botNavigation.removeChild(botNavigation.lastElementChild);
-          
-              show_shop_base_1_navigation(); // Call the function to show shop base navigation
-            } else if (buttonElements.length > 2) {
-              console.log("Bot navigation contains more than 2 buttons. Passing...");
-              // Do nothing if there are more than 2 buttons
-            } else {
-              console.log("Bot navigation contains less than 2 buttons.");
-            }
-          } else {
-            console.error("Element with id 'botNavigation' not found.");
-          }
-          
-          
-        }
+      if (permissionStatus.state === "granted") {
+        console.log("Geolocation access previously granted. Using last known location if available.");
+        useLastLocationOrFetch();
+      } else {
+        console.log("Requesting geolocation access...");
+        fetchCurrentLocation();
       }
-    },
-    function (error) {
-      // Handle errors when the user cancels the location request or it fails
-      console.error("Error fetching location:", error.message);
 
-      const botInfoDisplay = document.getElementById("botInfoDisplay");
-      if (botInfoDisplay) {
-        const h5Element = botInfoDisplay.querySelector("h5");
-        if (h5Element) {
-          h5Element.innerHTML = "Location Access Denied";
+      // Monitor for changes in permission state
+      permissionStatus.onchange = function () {
+        console.log("Geolocation permission state changed to:", permissionStatus.state);
+        if (permissionStatus.state === "granted") {
+          fetchCurrentLocation();
         }
+      };
+    })
+    .catch(function (error) {
+      console.error("Error checking geolocation permissions:", error.message);
+    });
 
-        const pElement = botInfoDisplay.querySelector("p");
-        if (pElement) {
-          pElement.innerHTML = "Please enable location access to fetch coordinates.";
+  // Use the last location in loca_stack or fetch a new one
+  function useLastLocationOrFetch() {
+    if (loca_stack.length > 0) {
+      const lastLocation = loca_stack[loca_stack.length - 1];
+      updateLocationDisplay("Using Last Known Location", lastLocation.latitude, lastLocation.longitude);
+      console.log("Using last known location from loca_stack:", lastLocation);
+    } else {
+      fetchCurrentLocation();
+    }
+  }
+
+  // Fetch the current location
+  function fetchCurrentLocation() {
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        animate_location();
+
+        const { latitude, longitude } = position.coords;
+        loca_stack.push({ latitude, longitude });
+        updateLocationDisplay("Updated Location", latitude, longitude);
+        console.log("Fetched current location:", { latitude, longitude });
+      },
+      function (error) {
+        console.error("Error fetching location:", error.message);
+        updateLocationDisplay("Location Access Denied", null, null, "Please enable location access to fetch coordinates.");
+      }
+    );
+
+    // Start watching for location updates
+    watchId = navigator.geolocation.watchPosition(
+      function (position) {
+        const now = Date.now();
+        if (now - lastUpdateTime > 5000) { // Update every 5 seconds
+          lastUpdateTime = now;
+
+          const { latitude, longitude } = position.coords;
+          loca_stack.push({ latitude, longitude });
+          updateLocationDisplay("Updated Coordinates", latitude, longitude);
+          console.log("Updated location stack:", loca_stack);
+        }
+      },
+      function (error) {
+        console.error("Error watching location:", error.message);
+        updateLocationDisplay("Location Tracking Error", null, null, "Unable to track location updates. Please check permissions.");
+      }
+    );
+  }
+
+  // Update the display with location data
+  function updateLocationDisplay(title, latitude, longitude, errorMessage) {
+    console.log("Updating location display:", { title, latitude, longitude, errorMessage });
+
+    show_location_with_marker(latitude, longitude);
+
+    const botInfoDisplay = document.getElementById("botInfoDisplay");
+    if (botInfoDisplay) {
+      const h5Element = botInfoDisplay.querySelector("h5");
+      const pElement = botInfoDisplay.querySelector("p");
+
+      const botNavigation = document.getElementById("botNavigation");
+      if (botNavigation) {
+        botNavigation.innerHTML = "";
+
+        botView.current_shop_base_0_active_buttons.forEach(button => {
+          const buttonBig = document.createElement('div');
+          buttonBig.classList.add('bot_button_layer');
+          buttonBig.innerHTML = `
+              <input type="hidden" name="intent" value="${button.label}">
+              <button class="bot_button" id="${button.id}" onclick="process_button_master(this)">
+                  <div class="row">
+                      <div class="col-8">
+                          <span class="type-label">${button.label}</span>
+                      </div>
+                      <div class="col-4">
+                          <span class="type_label"><i class="${button.icon}"></i></span>
+                      </div>
+                  </div>
+              </button>
+          `;
+
+          botNavigation.appendChild(buttonBig);
+      });
+
+      }
+
+      if (h5Element) h5Element.innerHTML = title || "Location Info";
+      if (pElement) {
+        if (latitude !== null && longitude !== null) {
+          pElement.innerHTML = `Coordinates: ${latitude}, ${longitude}`;
+        } else {
+          pElement.innerHTML = errorMessage || "No location data available.";
         }
       }
     }
-  );
+  }
 
-  // Watch the location and update the display on change
-  watchId = navigator.geolocation.watchPosition(
-    function (position) {
-      animate_location(); // Animate when the location is updated
+  // Stop location tracking on button click
+  const updateLocationButton = document.getElementById("cancel_location");
+  if (updateLocationButton) {
+    updateLocationButton.addEventListener("click", quit_location_track);
+  }
+}
 
-      const botInfoDisplay = document.getElementById("botInfoDisplay");
-      if (botInfoDisplay) {
-        // Update the second child (p) with the updated coordinates
-        const pElement = botInfoDisplay.querySelector("p");
-        if (pElement) {
-          const { latitude, longitude } = position.coords;
-          pElement.innerHTML = `Updated Coordinates: ${latitude}, ${longitude}`;
+// Stop watching the location
+function quit_location_track() {
+  if (watchId) {
+    navigator.geolocation.clearWatch(watchId);
+    watchId = null;
+    console.log("Stopped location tracking.");
+  }
+}
 
-          // Push the updated coordinates to loca_stack
-          loca_stack.push({ latitude, longitude });
-          console.log("Updated Location Stack:", loca_stack);
-        }
-      }
-    },
-    function (error) {
-      // Handle errors when the location tracking fails or is canceled
-      console.error("Error watching location:", error.message);
 
-      const botInfoDisplay = document.getElementById("botInfoDisplay");
-      if (botInfoDisplay) {
-        const h5Element = botInfoDisplay.querySelector("h5");
-        if (h5Element) {
-          h5Element.innerHTML = "Location Tracking Error";
-        }
 
-        const pElement = botInfoDisplay.querySelector("p");
-        if (pElement) {
-          pElement.innerHTML = "Unable to track location updates. Please check permissions.";
-        }
-      }
-    }
-  );
-
-  // Add event listener for the "update_location" button to stop location tracking
-  document.getElementById('update_location').addEventListener('click', function () {
-    quit_location_track(); // Stop location tracking and animate
-  });
-
+function process_cancel_location() {
+  console.log('calling process_cancel_location');
+  quit_location_track();
 }
 
 
@@ -517,6 +592,19 @@ function show_pu_base(){
   show_pu_navigation();
 
 }
+
+
+function process_pu_pr_online(){
+  console.log('calling process_pu_pr_online');
+  
+}
+
+function process_pu_pr_physical(){
+  console.log('calling process_pu_pr_physical');
+  
+} 
+
+
 
 function process_wallet(){
   console.log('process wallet');
