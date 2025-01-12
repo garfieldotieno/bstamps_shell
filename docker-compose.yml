@@ -42,7 +42,7 @@ services:
     image: ngrok/ngrok
     command: http --domain=advanced-pet-ibex.ngrok-free.app  bstamps_shell-bstamps-1:5009
     environment:
-      - NGROK_AUTHTOKEN=usr_2gKIOX10r3g1LhdNlcO19Nglu1n
+      - NGROK_AUTHTOKEN=2rWV3fQJkRWYeAZW2xTnt3mpqsO_5YfRCai6v61epYHauLohm
     restart: unless-stopped
 
   bstamps:
