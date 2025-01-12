@@ -40,9 +40,9 @@ services:
 
   cron_de_local_tunnel:
     image: ngrok/ngrok
-    command: http --domain=mutually-advanced-pegasus.ngrok-free.app bstamps_shell-bstamps-1:5009
+    command: http --domain=advanced-pet-ibex.ngrok-free.app 80 bstamps_shell-bstamps-1:5009
     environment:
-      - NGROK_AUTHTOKEN=2mhLUksuND2xQDxnBzY0EyPmFro_b6Mm85D1BEU7AbnBoKNd
+      - NGROK_AUTHTOKEN=usr_2gKIOX10r3g1LhdNlcO19Nglu1n
     restart: unless-stopped
 
   bstamps:
