@@ -155,7 +155,7 @@ const botView = {
     current_middle_button: [
         [
             { id: 'refresh', label: 'Refresh', icon: 'fa-solid fa-refresh' },
-            { id: 'camera', label: 'Scanner', icon: 'fa-solid fa-camera' },
+            { id: 'camera', label: 'Capture', icon: 'fa-solid fa-camera' },
             { id: 'games', label: 'Games', icon: 'fa-solid fa-gamepad' },
             { id: 'smarttv', label: 'Stream', icon: 'fa-solid fa-display' }
         ]
@@ -224,7 +224,7 @@ const botView = {
 
     current_pu_pr_buttons: [
         { id: "pu_pr_online", label: 'Online', icon: 'fa-solid fa-globe'},
-        { id: "pu_pr_physical", label: "Physical", icon: 'fa-solid fa-cart-shopping'},
+        { id: "pu_pr_physical", label: "Physical", icon: 'fa-solid fa-door-open'},
         { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
     ],
 
@@ -256,7 +256,8 @@ const botView = {
     },
 
     current_scanner_base_buttons: [
-        { id: 'take_photo', label: 'Capture', icon: 'fa-solid fa-camera'},
+        { id: 'take_photo', label: 'Camera', icon: 'fa-solid fa-camera'},
+        { id: 'scan_media', label: 'Scanner', icon: 'fa-solid fa-upload'},
         { id: 'base_cancel', label: 'Cancel', icon: 'fa-solid fa-rectangle-xmark'}
     ],
 
@@ -452,6 +453,22 @@ function update_items_of_sale_view(){
     }
 }
 
+
+function render_pu_pr_online_items_of_sale(){
+    console.log('rendering pu_pr online items')
+}
+
+function render_pu_online_items_of_sale(){
+    console.log('rendering pu online items')
+}
+
+function render_pu_pr_physical_items_of_sale(){
+    console.log('rendering pu_pr physical items')
+}
+
+function render_pu_physical_items_of_sale(){
+    console.log('rendering pu physical items')
+}
 
 function show_remaining_buttons(){
     console.log('showing remianing buttons')
